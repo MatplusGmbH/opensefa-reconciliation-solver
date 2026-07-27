@@ -1,0 +1,85 @@
+Variablenvektor (Value | Key | Info) = 
+[
+   ?               | TC:30                | P1:Transferkoeffizient F2 -> F3:Good:2025,
+   ?               | TC:31                | P1:Transferkoeffizient F1 -> F4:Good:2025,
+   ?               | BI:2                 | P0:Gesamtimport:Good:2025,
+   ?               | BO:2                 | P0:Gesamtexport:Good:2025,
+   ?               | BD:2                 | P0:Gesamtlageränderung:Good:2025,
+   ?               | BS:3                 | P0:Gesamtlagerbestand:Good:2025,
+   1000±1670       | FV:5                 | F1:Massenfluss:Good:2025,
+   160±1250        | FV:6                 | F2:Massenfluss:Good:2025,
+   0,1±0,1             | TC:18                | P1:Transferkoeffizient F1 -> F3:Good:2025,
+   160             | FV:7                 | F3:Massenfluss:Good:2025,
+   1000            | FV:8                 | F4:Massenfluss:Good:2025,
+   1               | TC:21                | P1:Transferkoeffizient F2 -> F4:Good:2025,
+   1               | TS:0                 | ∑ Transferkoeffizienten
+]
+
+Ergebnisvektor (Value | Key | Info) = 
+[
+   0               | TC:30                | P1:Transferkoeffizient F2 -> F3:Good:2025,
+   0               | TC:31                | P1:Transferkoeffizient F1 -> F4:Good:2025,
+   1,33570450418442 | BI:2                 | P0:Gesamtimport:Good:2025,
+   1,63734729667845 | BO:2                 | P0:Gesamtexport:Good:2025,
+   1,03411474228197 | BD:2                 | P0:Gesamtlageränderung:Good:2025,
+   0,786408271789727 | BS:3                 | P0:Gesamtlagerbestand:Good:2025,
+   1,72413793103448±2,87931034482759 | FV:5                 | F1:Massenfluss:Good:2025,
+   0,275862068965517±2,1551724137931 | FV:6                 | F2:Massenfluss:Good:2025,
+   1±1             | TC:18                | P1:Transferkoeffizient F1 -> F3:Good:2025,
+   0,275862068965517 | FV:7                 | F3:Massenfluss:Good:2025,
+   1,72413793103448 | FV:8                 | F4:Massenfluss:Good:2025,
+   1               | TC:21                | P1:Transferkoeffizient F2 -> F4:Good:2025,
+   1               | TS:0                 | ∑ Transferkoeffizienten
+]
+
+******************************************
+*** Ausgabe der Gleichungen (F-Matrix) ***
+******************************************
+
+Legende (Key | Info):
+[
+   TC:30           | P1:Transferkoeffizient F2 -> F3:Good:2025,
+   TC:31           | P1:Transferkoeffizient F1 -> F4:Good:2025,
+   BI:2            | P0:Gesamtimport:Good:2025,
+   BO:2            | P0:Gesamtexport:Good:2025,
+   BD:2            | P0:Gesamtlageränderung:Good:2025,
+   BS:3            | P0:Gesamtlagerbestand:Good:2025,
+   FV:5            | F1:Massenfluss:Good:2025,
+   FV:6            | F2:Massenfluss:Good:2025,
+   TC:18           | P1:Transferkoeffizient F1 -> F3:Good:2025,
+   FV:7            | F3:Massenfluss:Good:2025,
+   FV:8            | F4:Massenfluss:Good:2025,
+   TC:21           | P1:Transferkoeffizient F2 -> F4:Good:2025,
+   TS:0            | ∑ Transferkoeffizienten
+]
+
+Gleichungen:
+0,5 * BS:3 = 0
+BI:2 - FV:5 - FV:6 = 0
+BO:2 - FV:7 - FV:8 = 0
+BD:2 + BO:2 - BI:2 = 0
+FV:5 + FV:6 - FV:7 - FV:8 = 0
+FV:7 - TC:18 * FV:5 - TC:30 * FV:6 = 0
+FV:8 - TC:21 * FV:6 - TC:31 * FV:5 = 0
+TS:0 - TC:18 - TC:31 = 0
+TS:0 - TC:21 - TC:30 = 0
+
+Anzahl der Iterationen: 44
+
+Ergebnisvektor (Value | Key | Info) = 
+[
+   -7,73506044188823E-18±2,69300128232905E-17 | TC:30                | P1:Transferkoeffizient F2 -> F3:Good:2025,
+   0,199490424883119±0,970255965728429 | TC:31                | P1:Transferkoeffizient F1 -> F4:Good:2025,
+   1160            | BI:2                 | P0:Gesamtimport:Good:2025,
+   1160            | BO:2                 | P0:Gesamtexport:Good:2025,
+   1,28785870856518E-13 | BD:2                 | P0:Gesamtlageränderung:Good:2025,
+   0               | BS:3                 | P0:Gesamtlagerbestand:Good:2025,
+   199,872687315±242,255275035665 | FV:5                 | F1:Massenfluss:Good:2025,
+   960,127312685±242,255275035665 | FV:6                 | F2:Massenfluss:Good:2025,
+   0,800509575116881±0,970255965728429 | TC:18                | P1:Transferkoeffizient F1 -> F3:Good:2025,
+   160             | FV:7                 | F3:Massenfluss:Good:2025,
+   1000            | FV:8                 | F4:Massenfluss:Good:2025,
+   1               | TC:21                | P1:Transferkoeffizient F2 -> F4:Good:2025,
+   1               | TS:0                 | ∑ Transferkoeffizienten
+]
+

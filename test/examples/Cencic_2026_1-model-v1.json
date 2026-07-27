@@ -1,0 +1,405 @@
+{
+    "content": {
+        "name": "New SEFMN-System",
+        "variables": [
+            {
+                "name": "F1_CN_S1_N1",
+                "type": "FixedVariable",
+                "value": 0.5,
+                "is_transfer_coefficient": false
+            },
+            {
+                "name": "F1_DE_mass_N1",
+                "is_transfer_coefficient": false,
+                "type": "FixedVariable",
+                "value": 1
+            },
+            {
+                "name": "F1_FR_S1_N1",
+                "type": "UnmeasuredVariable",
+                "is_transfer_coefficient": false,
+                "lb": 0
+            },
+            {
+                "name": "F1_FV_mass_N1",
+                "is_transfer_coefficient": false,
+                "type": "FixedVariable",
+                "value": 10
+            },
+            {
+                "name": "F1_mass_N1",
+                "is_transfer_coefficient": false,
+                "type": "UnmeasuredVariable",
+                "lb": 0
+            },
+            {
+                "name": "F1_S1_N1",
+                "is_transfer_coefficient": false,
+                "type": "UnmeasuredVariable",
+                "lb": 0
+            },
+            {
+                "name": "F2_FR_S1_N1",
+                "type": "UnmeasuredVariable",
+                "is_transfer_coefficient": false,
+                "lb": 0
+            },
+            {
+                "name": "F2_mass_N1",
+                "is_transfer_coefficient": false,
+                "type": "UnmeasuredVariable",
+                "lb": 0
+            },
+            {
+                "name": "F2_S1_N1",
+                "is_transfer_coefficient": false,
+                "type": "UnmeasuredVariable",
+                "lb": 0
+            },
+            {
+                "name": "F3_FR_S1_N1",
+                "type": "UnmeasuredVariable",
+                "is_transfer_coefficient": false,
+                "lb": 0
+            },
+            {
+                "name": "F3_mass_N1",
+                "is_transfer_coefficient": false,
+                "type": "UnmeasuredVariable",
+                "lb": 0
+            },
+            {
+                "name": "F3_S1_N1",
+                "is_transfer_coefficient": false,
+                "type": "UnmeasuredVariable",
+                "lb": 0
+            },
+            {
+                "name": "F4_FR_S1_N1",
+                "type": "UnmeasuredVariable",
+                "is_transfer_coefficient": false,
+                "lb": 0
+            },
+            {
+                "name": "F4_mass_N1",
+                "is_transfer_coefficient": false,
+                "type": "UnmeasuredVariable",
+                "lb": 0
+            },
+            {
+                "name": "F4_S1_N1",
+                "is_transfer_coefficient": false,
+                "type": "UnmeasuredVariable",
+                "lb": 0
+            },
+            {
+                "name": "P1_mass_SF3_N1",
+                "type": "UnmeasuredVariable",
+                "is_transfer_coefficient": true,
+                "lb": 0
+            },
+            {
+                "name": "P1_mass_SF4_N1",
+                "type": "UnmeasuredVariable",
+                "is_transfer_coefficient": true,
+                "lb": 0
+            },
+            {
+                "name": "P1_S1_SF3_N1",
+                "type": "UnmeasuredVariable",
+                "is_transfer_coefficient": true,
+                "lb": 0
+            },
+            {
+                "name": "P1_S1_SF4_N1",
+                "type": "UnmeasuredVariable",
+                "is_transfer_coefficient": true,
+                "lb": 0
+            }
+        ],
+        "equations": [
+            {
+                "constant_term": {
+                    "value": 0
+                },
+                "linear_terms": [
+                    {
+                        "name": "F1_mass_N1",
+                        "factor": 1
+                    },
+                    {
+                        "name": "F2_mass_N1",
+                        "factor": 1
+                    },
+                    {
+                        "name": "F3_mass_N1",
+                        "factor": -1
+                    },
+                    {
+                        "name": "F4_mass_N1",
+                        "factor": -1
+                    }
+                ],
+                "bilinear_terms": []
+            },
+            {
+                "constant_term": {
+                    "value": 0
+                },
+                "linear_terms": [
+                    {
+                        "name": "F1_mass_N1",
+                        "factor": 1
+                    }
+                ],
+                "bilinear_terms": [
+                    {
+                        "name1": "F1_FV_mass_N1",
+                        "name2": "F1_DE_mass_N1",
+                        "factor": -1
+                    }
+                ]
+            },
+            {
+                "constant_term": {
+                    "value": 0
+                },
+                "linear_terms": [
+                    {
+                        "name": "F1_S1_N1",
+                        "factor": 1
+                    },
+                    {
+                        "name": "F2_S1_N1",
+                        "factor": 1
+                    },
+                    {
+                        "name": "F3_S1_N1",
+                        "factor": -1
+                    },
+                    {
+                        "name": "F4_S1_N1",
+                        "factor": -1
+                    }
+                ],
+                "bilinear_terms": []
+            },
+            {
+                "constant_term": {
+                    "value": 0
+                },
+                "linear_terms": [
+                    {
+                        "name": "F1_S1_N1",
+                        "factor": 1
+                    }
+                ],
+                "bilinear_terms": [
+                    {
+                        "name1": "F1_CN_S1_N1",
+                        "name2": "F1_FV_mass_N1",
+                        "factor": -1
+                    }
+                ]
+            },
+            {
+                "constant_term": {
+                    "value": 0
+                },
+                "linear_terms": [
+                    {
+                        "name": "F1_S1_N1",
+                        "factor": 1
+                    }
+                ],
+                "bilinear_terms": [
+                    {
+                        "name1": "F1_FR_S1_N1",
+                        "name2": "F1_mass_N1",
+                        "factor": -1
+                    }
+                ]
+            },
+            {
+                "constant_term": {
+                    "value": 0
+                },
+                "linear_terms": [
+                    {
+                        "name": "F2_S1_N1",
+                        "factor": 1
+                    }
+                ],
+                "bilinear_terms": [
+                    {
+                        "name1": "F2_FR_S1_N1",
+                        "name2": "F2_mass_N1",
+                        "factor": -1
+                    }
+                ]
+            },
+            {
+                "constant_term": {
+                    "value": 0
+                },
+                "linear_terms": [
+                    {
+                        "name": "F3_mass_N1",
+                        "factor": 1
+                    }
+                ],
+                "bilinear_terms": [
+                    {
+                        "name1": "F1_mass_N1",
+                        "name2": "P1_mass_SF3_N1",
+                        "factor": -1
+                    },
+                    {
+                        "name1": "F2_mass_N1",
+                        "name2": "P1_mass_SF3_N1",
+                        "factor": -1
+                    }
+                ]
+            },
+            {
+                "constant_term": {
+                    "value": 0
+                },
+                "linear_terms": [
+                    {
+                        "name": "F3_S1_N1",
+                        "factor": 1
+                    }
+                ],
+                "bilinear_terms": [
+                    {
+                        "name1": "F1_S1_N1",
+                        "name2": "P1_S1_SF3_N1",
+                        "factor": -1
+                    },
+                    {
+                        "name1": "F2_S1_N1",
+                        "name2": "P1_S1_SF3_N1",
+                        "factor": -1
+                    }
+                ]
+            },
+            {
+                "constant_term": {
+                    "value": 0
+                },
+                "linear_terms": [
+                    {
+                        "name": "F3_S1_N1",
+                        "factor": 1
+                    }
+                ],
+                "bilinear_terms": [
+                    {
+                        "name1": "F3_FR_S1_N1",
+                        "name2": "F3_mass_N1",
+                        "factor": -1
+                    }
+                ]
+            },
+            {
+                "constant_term": {
+                    "value": 0
+                },
+                "linear_terms": [
+                    {
+                        "name": "F4_mass_N1",
+                        "factor": 1
+                    }
+                ],
+                "bilinear_terms": [
+                    {
+                        "name1": "F1_mass_N1",
+                        "name2": "P1_mass_SF4_N1",
+                        "factor": -1
+                    },
+                    {
+                        "name1": "F2_mass_N1",
+                        "name2": "P1_mass_SF4_N1",
+                        "factor": -1
+                    }
+                ]
+            },
+            {
+                "constant_term": {
+                    "value": 0
+                },
+                "linear_terms": [
+                    {
+                        "name": "F4_S1_N1",
+                        "factor": 1
+                    }
+                ],
+                "bilinear_terms": [
+                    {
+                        "name1": "F1_S1_N1",
+                        "name2": "P1_S1_SF4_N1",
+                        "factor": -1
+                    },
+                    {
+                        "name1": "F2_S1_N1",
+                        "name2": "P1_S1_SF4_N1",
+                        "factor": -1
+                    }
+                ]
+            },
+            {
+                "constant_term": {
+                    "value": 0
+                },
+                "linear_terms": [
+                    {
+                        "name": "F4_S1_N1",
+                        "factor": 1
+                    }
+                ],
+                "bilinear_terms": [
+                    {
+                        "name1": "F4_FR_S1_N1",
+                        "name2": "F4_mass_N1",
+                        "factor": -1
+                    }
+                ]
+            },
+            {
+                "constant_term": {
+                    "value": 1
+                },
+                "linear_terms": [
+                    {
+                        "name": "P1_mass_SF3_N1",
+                        "factor": -1
+                    },
+                    {
+                        "name": "P1_mass_SF4_N1",
+                        "factor": -1
+                    }
+                ],
+                "bilinear_terms": []
+            },
+            {
+                "constant_term": {
+                    "value": 1
+                },
+                "linear_terms": [
+                    {
+                        "name": "P1_S1_SF3_N1",
+                        "factor": -1
+                    },
+                    {
+                        "name": "P1_S1_SF4_N1",
+                        "factor": -1
+                    }
+                ],
+                "bilinear_terms": []
+            }
+        ],
+        "solver": "JuMP"
+    },
+    "force_basic_constraints": true
+}

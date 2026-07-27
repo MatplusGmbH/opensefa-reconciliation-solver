@@ -1,0 +1,88 @@
+{
+  "content": {
+    "name": "Simple test model",
+    "variables": [
+      {
+        "type": "MeasuredVariable",
+        "name": "v",
+        "value": 100.0,
+        "uncertainty": 10.0,
+        "is_transfer_coefficient": false
+      },
+      {
+        "type": "FixedVariable",
+        "name": "w",
+        "value": 50.0,
+        "is_transfer_coefficient": false
+      },
+      {
+        "type": "MeasuredVariable",
+        "name": "x",
+        "value": 0.6,
+        "uncertainty": 0.1,
+        "is_transfer_coefficient": true
+      },
+      {
+        "type": "UnmeasuredVariable",
+        "name": "y",
+        "is_transfer_coefficient": false
+      }
+    ],
+    "equations": [
+      {
+        "constant_term": {
+          "value": 0.0
+        },
+        "linear_terms": [
+          {
+            "name": "w",
+            "factor": 1.0
+          }
+        ],
+        "bilinear_terms": [
+          {
+            "name1": "v",
+            "name2": "x",
+            "factor": -1.0
+          }
+        ]
+      },
+      {
+        "constant_term": {
+          "value": -9.0
+        },
+        "linear_terms": [
+          {
+            "name": "w",
+            "factor": 0.0
+          }
+        ],
+        "bilinear_terms": [
+          {
+            "name1": "v",
+            "name2": "x",
+            "factor": 3.0
+          }
+        ]
+      },
+      {
+        "constant_term": {
+          "value": 6.0
+        },
+        "linear_terms": [
+          {
+            "name": "w",
+            "factor": -2.0
+          }
+        ],
+        "bilinear_terms": [
+          {
+            "name1": "v",
+            "name2": "x",
+            "factor": 0.0
+          }
+        ]
+      }
+    ]
+  }
+}

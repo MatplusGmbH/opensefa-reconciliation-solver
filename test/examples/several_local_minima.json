@@ -1,0 +1,167 @@
+{
+    "content": {
+        "name": "Example with two local minima (but just one global minimum)",
+        "variables": [
+            {
+                "name": "F1_mass_N1",
+                "is_transfer_coefficient": false,
+                "type": "MeasuredVariable",
+                "value": 24.25,
+                "uncertainty": 31.304951684997055749728431362237867296168657034561360139792561435,
+                "lb": 0
+            },
+            {
+                "name": "F2_mass_N1",
+                "is_transfer_coefficient": false,
+                "type": "MeasuredVariable",
+                "value": 1.5959595959595959595959595959595959595959595959595959595959595959,
+                "uncertainty": 27.110883423451918196254857798476797275830451937041135786113016362,
+                "lb": 0
+            },
+            {
+                "name": "F3_mass_N1",
+                "is_transfer_coefficient": false,
+                "type": "FixedVariable",
+                "value": 1.0
+            },
+            {
+                "name": "F4_mass_N1",
+                "is_transfer_coefficient": false,
+                "type": "FixedVariable",
+                "value": 22.0
+            },
+            {
+                "name": "P1_mass_F1F3_N1",
+                "is_transfer_coefficient": true,
+                "type": "MeasuredVariable",
+                "value": 0.7642376142376142376142376142376142376142376142376142376142376142,
+                "uncertainty": 1,
+                "lb": 0
+            },
+            {
+                "name": "P1_mass_F2F4_N1",
+                "is_transfer_coefficient": true,
+                "type": "FixedVariable",
+                "value": 1
+            },
+            {
+                "name": "P1_mass_F2F3_N1",
+                "type": "UnmeasuredVariable",
+                "is_transfer_coefficient": true,
+                "lb": 0
+            },
+            {
+                "name": "P1_mass_F1F4_N1",
+                "type": "UnmeasuredVariable",
+                "is_transfer_coefficient": true,
+                "lb": 0
+            }
+        ],
+        "equations": [
+            {
+                "constant_term": {
+                    "value": 0
+                },
+                "linear_terms": [
+                    {
+                        "name": "F1_mass_N1",
+                        "factor": 1
+                    },
+                    {
+                        "name": "F2_mass_N1",
+                        "factor": 1
+                    },
+                    {
+                        "name": "F3_mass_N1",
+                        "factor": -1
+                    },
+                    {
+                        "name": "F4_mass_N1",
+                        "factor": -1
+                    }
+                ],
+                "bilinear_terms": []
+            },
+            {
+                "constant_term": {
+                    "value": 0
+                },
+                "linear_terms": [
+                    {
+                        "name": "F3_mass_N1",
+                        "factor": 1
+                    }
+                ],
+                "bilinear_terms": [
+                    {
+                        "name1": "F1_mass_N1",
+                        "name2": "P1_mass_F1F3_N1",
+                        "factor": -1
+                    },
+                    {
+                        "name1": "F2_mass_N1",
+                        "name2": "P1_mass_F2F3_N1",
+                        "factor": -1
+                    }
+                ]
+            },
+            {
+                "constant_term": {
+                    "value": 0
+                },
+                "linear_terms": [
+                    {
+                        "name": "F4_mass_N1",
+                        "factor": 1
+                    }
+                ],
+                "bilinear_terms": [
+                    {
+                        "name1": "F1_mass_N1",
+                        "name2": "P1_mass_F1F4_N1",
+                        "factor": -1
+                    },
+                    {
+                        "name1": "F2_mass_N1",
+                        "name2": "P1_mass_F2F4_N1",
+                        "factor": -1
+                    }
+                ]
+            },
+            {
+                "constant_term": {
+                    "value": 1
+                },
+                "linear_terms": [
+                    {
+                        "name": "P1_mass_F1F3_N1",
+                        "factor": -1
+                    },
+                    {
+                        "name": "P1_mass_F1F4_N1",
+                        "factor": -1
+                    }
+                ],
+                "bilinear_terms": []
+            },
+            {
+                "constant_term": {
+                    "value": 1
+                },
+                "linear_terms": [
+                    {
+                        "name": "P1_mass_F2F3_N1",
+                        "factor": -1
+                    },
+                    {
+                        "name": "P1_mass_F2F4_N1",
+                        "factor": -1
+                    }
+                ],
+                "bilinear_terms": []
+            }
+        ],
+        "solver": ""
+    },
+    "force_basic_constraints": true
+}

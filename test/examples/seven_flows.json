@@ -1,0 +1,103 @@
+{
+  "content": {
+  "name": "Seven flows Cencic2016",
+  "variables": [
+    {
+      "type": "MeasuredVariable",
+      "name": "m1",
+      "value": 100.0,
+      "uncertainty": 10.0,
+      "is_transfer_coefficient": false
+    },
+    {
+      "type": "FixedVariable",
+      "name": "m2",
+      "value": 50.0,
+      "is_transfer_coefficient": false
+    },
+    {
+      "type": "MeasuredVariable",
+      "name": "m3",
+      "value": 300.0,
+      "uncertainty": 30.0,
+      "is_transfer_coefficient": false
+    },
+    {
+      "type": "UnmeasuredVariable",
+      "name": "m4",
+      "is_transfer_coefficient": false
+    },
+    {
+      "type": "MeasuredVariable",
+      "name": "m5",
+      "value": 160.0,
+      "uncertainty": 16.0,
+      "is_transfer_coefficient": false
+    },
+    {
+      "type": "UnmeasuredVariable",
+      "name": "m6",
+      "is_transfer_coefficient": false
+    },
+    {
+      "type": "UnmeasuredVariable",
+      "name": "m7",
+      "is_transfer_coefficient": false
+    },
+    {
+      "type": "MeasuredVariable",
+      "name": "tc34",
+      "value": 0.5,
+      "uncertainty": 0.05,
+      "is_transfer_coefficient": true
+    }
+  ],
+  "equations": [
+    {
+      "constant_term": {
+        "value": 0.0
+      },
+      "linear_terms": [
+        { "name": "m1", "factor": 1.0 },
+        { "name": "m2", "factor": 1.0 },
+        { "name": "m4", "factor": 1.0 },
+        { "name": "m3", "factor": -1.0 }
+      ],
+      "bilinear_terms": []
+    },
+    {
+      "constant_term": {
+        "value": 0.0
+      },
+      "linear_terms": [
+        { "name": "m3", "factor": 1.0 },
+        { "name": "m4", "factor": -1.0 },
+        { "name": "m5", "factor": -1.0 }
+      ],
+      "bilinear_terms": []
+    },
+    {
+      "constant_term": {
+        "value": 0.0
+      },
+      "linear_terms": [
+        { "name": "m5", "factor": 1.0 },
+        { "name": "m6", "factor": -1.0 },
+        { "name": "m7", "factor": -1.0 }
+      ],
+      "bilinear_terms": []
+    },
+    {
+      "constant_term": {
+        "value": 0.0
+      },
+      "linear_terms": [
+        { "name": "m4", "factor": 1.0 }
+      ],
+      "bilinear_terms": [
+        { "name1": "m3", "name2": "tc34", "factor": -1.0 }
+      ]
+    }
+  ]
+}
+}

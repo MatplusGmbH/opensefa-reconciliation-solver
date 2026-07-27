@@ -1,0 +1,4 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+OpenSEFA = "5ea2f283-4f09-401b-a123-14c27337568a"
+NonlinearSolveBase = "be0214bd-f91f-a760-ac4e-3421ce2b2da0"

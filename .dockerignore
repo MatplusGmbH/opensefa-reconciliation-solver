@@ -1,0 +1,5 @@
+.git
+*.jl~
+*.png
+*.ipynb
+notebooks/

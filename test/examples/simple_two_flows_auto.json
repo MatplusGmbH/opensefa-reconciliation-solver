@@ -1,0 +1,49 @@
+{
+  "content": {
+    "name": "SEFMN Example",
+    "variables": [
+      {
+        "name": "F1_mass_N1",
+        "is_transfer_coefficient": false,
+        "type": "MeasuredVariable",
+        "value": 1,
+        "uncertainty": 0.1
+      },
+      {
+        "name": "F2_mass_N1",
+        "is_transfer_coefficient": false,
+        "type": "UnmeasuredVariable"
+      },
+      {
+        "name": "F3_mass_N1",
+        "is_transfer_coefficient": false,
+        "type": "MeasuredVariable",
+        "value": 2,
+        "uncertainty": 0.3
+      }
+    ],
+    "equations": [
+      {
+        "constant_term": {
+          "value": 0
+        },
+        "linear_terms": [
+          {
+            "name": "F1_mass_N1",
+            "factor": 1
+          },
+          {
+            "name": "F3_mass_N1",
+            "factor": 1
+          },
+          {
+            "name": "F2_mass_N1",
+            "factor": -1
+          }
+        ],
+        "bilinear_terms": []
+      }
+    ],
+    "solver": "Default"
+  }
+}
