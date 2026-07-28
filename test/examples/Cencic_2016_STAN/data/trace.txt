@@ -1,0 +1,72 @@
+Vector of variables (Value | Key | Info) = 
+[
+   ?               | F4_m                 | F4:Mass flow:Good:2025,
+   ?               | F6_m                 | F6:Mass flow:Good:2025,
+   ?               | F7_m                 | F7:Mass flow:Good:2025,
+   ?               | P2_T_F5              | P2:Transfer coefficient ∑ -> F5:Good:2025,
+   ?               | P0_I_m               | P0:Total import:Good:2025,
+   ?               | P0_E_m               | P0:Total export:Good:2025,
+   ?               | P0_dS_m              | P0:Total stock delta:Good:2025,
+   ?               | P0_S_m               | P0:Total stock value:Good:2025,
+   100000±10000    | F1_m                 | F1:Mass flow:Good:2025,
+   300000±30000    | F3_m                 | F3:Mass flow:Good:2025,
+   160000±16000    | F5_m                 | F5:Mass flow:Good:2025,
+   0.5±0.05        | P2_T_F4              | P2:Transfer coefficient ∑ -> F4:Good:2025,
+   50000           | F2_m                 | F2:Mass flow:Good:2025,
+   1               | SUM_TC               | ∑ Transfer coefficients
+]
+
+Vector of results (Value | Key | Info) = 
+[
+   1.33570450418442 | F4_m                 | F4:Mass flow:Good:2025,
+   1.63734729667845 | F6_m                 | F6:Mass flow:Good:2025,
+   1.03411474228197 | F7_m                 | F7:Mass flow:Good:2025,
+   0.5             | P2_T_F5              | P2:Transfer coefficient ∑ -> F5:Good:2025,
+   0.786408271789727 | P0_I_m               | P0:Total import:Good:2025,
+   0.863916783879695 | P0_E_m               | P0:Total export:Good:2025,
+   1.07206116259593 | P0_dS_m              | P0:Total stock delta:Good:2025,
+   1.17084534634464 | P0_S_m               | P0:Total stock value:Good:2025,
+   0.655737704918033±0.0655737704918033 | F1_m                 | F1:Mass flow:Good:2025,
+   1.9672131147541±0.19672131147541 | F3_m                 | F3:Mass flow:Good:2025,
+   1.04918032786885±0.104918032786885 | F5_m                 | F5:Mass flow:Good:2025,
+   0.5±0.05        | P2_T_F4              | P2:Transfer coefficient ∑ -> F4:Good:2025,
+   0.327868852459016 | F2_m                 | F2:Mass flow:Good:2025,
+   1               | SUM_TC               | ∑ Transfer coefficients
+]
+
+**************************************
+*** Output of equations (F-Matrix) ***
+**************************************
+
+Equations:
+P0_S_m = 0
+P0_I_m - F1_m - F2_m = 0
+P0_E_m - F6_m - F7_m = 0
+P0_dS_m + P0_E_m - P0_I_m = 0
+F1_m + F2_m + F4_m - F3_m = 0
+F3_m - F4_m - F5_m = 0
+F5_m - F6_m - F7_m = 0
+F4_m - P2_T_F4 * F3_m = 0
+F5_m - P2_T_F5 * F3_m = 0
+SUM_TC - P2_T_F4 - P2_T_F5 = 0
+
+Number of iterations: 4
+
+Vector of results (Value | Key | Info) = 
+[
+   149990.269725933±21213.2969307518 | F4_m                 | F4:Mass flow:Good:2025,
+   ?               | F6_m                 | F6:Mass flow:Good:2025,
+   ?               | F7_m                 | F7:Mass flow:Good:2025,
+   0.504027048974842±0.0376810238985267 | P2_T_F5              | P2:Transfer coefficient ∑ -> F5:Good:2025,
+   152425.959658972±7882.79241171309 | P0_I_m               | P0:Total import:Good:2025,
+   152425.959658972±7882.79241171309 | P0_E_m               | P0:Total export:Good:2025,
+   1.69309011255336E-11 | P0_dS_m              | P0:Total stock delta:Good:2025,
+   0               | P0_S_m               | P0:Total stock value:Good:2025,
+   102425.959658972±7882.79241171308 | F1_m                 | F1:Mass flow:Good:2025,
+   302416.229384905±22608.614339116 | F3_m                 | F3:Mass flow:Good:2025,
+   152425.959658972±7882.79241171309 | F5_m                 | F5:Mass flow:Good:2025,
+   0.495972951025158±0.0376810238985266 | P2_T_F4              | P2:Transfer coefficient ∑ -> F4:Good:2025,
+   50000           | F2_m                 | F2:Mass flow:Good:2025,
+   1               | SUM_TC               | ∑ Transfer coefficients
+]
+

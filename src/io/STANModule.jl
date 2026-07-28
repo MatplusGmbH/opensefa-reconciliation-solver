@@ -36,7 +36,7 @@ export
   add_STAN_infos!
 
 "Path for each available model."
-const MODELS_PATH = joinpath(pkgdir(OpenSEFA), "models")
+const MODELS_PATH = joinpath(pkgdir(OpenSEFA), "test", "examples")
 
 "These models are work-in-progress, hence aren't tested yet."
 IGNORED_MODELS = String[

@@ -97,7 +97,7 @@ We summarize the steps below in a self-contained example that loads the model fr
 using OpenSEFA
 
 # Include the file containing the problem definition.
-include(joinpath(pkgdir(OpenSEFA), "test", "examples", "seven_flows.jl"))
+include(joinpath(MODELS_PATH, "seven_flows.jl"))
 
 # Parse the equations and load into Julia data structures.
 rec = seven_flows_cencic_2012()
@@ -182,7 +182,7 @@ More complex models defined using the STAN software can be loaded as well. Make 
 using OpenSEFA
 
 # Location of the folder with the model definition.
-path = joinpath(MODELS_PATH, "4_PVC Austria (1950-1994)")
+path = joinpath(MODELS_PATH, "Cencic_2016_STAN")
 
 # Parse the trace file, then convert to Julia data structures.
 rec = convert(ReconciliationProblem, parse(STANTrace, path))
@@ -212,7 +212,7 @@ To load model data (`*.csv` files) exported from the data explorer, add the corr
 ```julia
 using OpenSEFA
 
-path = joinpath(MODELS_PATH, "1a_Example")
+path = joinpath(MODELS_PATH, "Cencic_2016_STAN")
 sdata = load_stan_data(path)
 ```
 
@@ -233,7 +233,7 @@ The following code loads the model into a Julia data structure containing equati
 ```julia
 using OpenSEFA
 
-path = joinpath(MODELS_PATH, "1a_Example")
+path = joinpath(MODELS_PATH, "Cencic_2016_STAN")
 strace = parse(STANTrace, path)
 rec = convert(ReconciliationProblem, strace)
 ```
@@ -245,10 +245,18 @@ Both presolve and solve interfaces are shown in the diagram below. Use `presolve
 ```julia
 using OpenSEFA
 
-include(joinpath(pkgdir(OpenSEFA), "test", "examples", "seven_flows.jl"))
+include(joinpath(MODELS_PATH, "seven_flows.jl"))
 rec = seven_flows_cencic_2012()
 
-pre = presolve(rec)
+julia> presolve(rec) |> unwrap
+PresolvedReconciliationProblem(• Data reconciliation optimization problem with:
+  • Name: Seven flows Cencic2016
+  • Equations: 4
+  • Variables: 7
+    • Measured: 4
+    • Unmeasured: 3
+    • Fixed: 0
+, {"m2" = 50.0}, ["m1", "m3", "m4", "m5", "m6", "m7", "tc34"], ["m2"], RedundancyData([1, 2, 3, 4], [50.0, 0.0, 0.0, 0.0], [1.0 0.0 0.0 0.0; -1.0 1.0 0.0 0.0; … ; 0.0 0.0 -1.0 0.0; 0.0 0.0 0.0 -1.0], Int64[], {"m1" = 1, "m3" = 2, "m5" = 3, "tc34" = 4, "m4" = 5, "m6" = 6, "m7" = 7}, {("m3", "tc34") = 8}), {}, {})
 ```
 
 This will apply precomputations to the given problem, potentially returning a smaller problem.
@@ -284,7 +292,7 @@ For more exploratory cases, you may want to choose another solver backend suppor
 using OpenSEFA
 using MadNLP
 
-include(joinpath(pkgdir(OpenSEFA), "test", "examples", "seven_flows.jl"))
+include(joinpath(MODELS_PATH, "seven_flows.jl"))
 rec = seven_flows_cencic_2012()
 
 sol = solve(rec, JuMPSolver(solver=MadNLP.Optimizer))
