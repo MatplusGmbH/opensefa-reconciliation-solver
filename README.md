@@ -119,7 +119,7 @@ julia> rec
     • Fixed: 1
 
 
-julia> sol
+julia> sol = solve(rec)
 • Solution of data reconciliation optimization problem with:
   • Name: Seven flows Cencic2016
   • Equations: 4
@@ -128,8 +128,52 @@ julia> sol
     • Unmeasured: 3
     • Fixed: 1
   • Objective value: 0.2959
-  • Equations discrepancy (max abs): 1.026e-9
-  • Fixed variables discrepancy (max abs): 0.0
+  • Status: FEASIBLE_WITH_UNOBSERVABLE_VARIABLES
+  • Globality proven: false
+  • Solution score:
+    • Percentage of solved variables: 1.0
+    • Percentage of assigned variables: 1.0
+    • Percentage of uniquely solved variables: 0.75
+    • Percentage of solved equations: 1.0
+    • Residual: 3.0154e-8
+    • Max relative residual: 4.1816e-13
+```
+The model's equations and variables are displayed accessing each field:
+```julia
+julia> rec.equations
+4-element Dictionary{Int64, Equation}:
+ 1 │  m1 + m2 + m4 - m3 = 0
+ 2 │  m3 - m4 - m5 = 0
+ 3 │  m5 - m6 - m7 = 0
+ 4 │  m4 - m3 * tc34 = 0
+
+julia> rec.measured
+4-element Dictionary{String, MeasuredVariable}:
+   "m1" │ MeasuredVariable("m1", 100.0, 10.0, "", missing, false, 0.0, missing)
+   "m3" │ MeasuredVariable("m3", 300.0, 30.0, "", missing, false, 0.0, missing)
+   "m5" │ MeasuredVariable("m5", 160.0, 16.0, "", missing, false, 0.0, missing)
+ "tc34" │ MeasuredVariable("tc34", 0.5, 0.05, "", missing, true, 0.0, 1.0)
+
+julia> rec.unmeasured
+3-element Dictionary{String, UnmeasuredVariable}:
+ "m4" │ UnmeasuredVariable("m4", "", missing, false, 0.0, missing)
+ "m6" │ UnmeasuredVariable("m6", "", missing, false, 0.0, missing)
+ "m7" │ UnmeasuredVariable("m7", "", missing, false, 0.0, missing)
+
+julia> rec.fixed
+1-element Dictionary{String, FixedVariable}:
+ "m2" │ FixedVariable("m2", 50.0, "", "", false)
+
+julia> rec.variables
+8-element Dictionary{String, Type{<:Variable}}:
+   "m1" │ MeasuredVariable
+   "m2" │ FixedVariable
+   "m3" │ MeasuredVariable
+   "m4" │ UnmeasuredVariable
+   "m5" │ MeasuredVariable
+   "m6" │ UnmeasuredVariable
+   "m7" │ UnmeasuredVariable
+ "tc34" │ MeasuredVariable
 ```
 
 More complex models defined using the STAN software can be loaded as well. Make sure that you export to a `trace.txt` file the result obtained from the STAN interface (trace dialog, enable equations output). Once that file has been (manually) generated, we parse it and then solve the problem:
