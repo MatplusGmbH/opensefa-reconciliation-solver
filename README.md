@@ -8,7 +8,7 @@
 - **Waste resource management**
 - **Policy assessment**
 
-The primary goal of MFA is to **quantify all flows and stocks** in a defined system, along with their associated uncertainties. For a comprehensive introduction to the theory and applications of MFA, refer to the standard handbook [1]. This project has been highly inspired by [STAN Software](https://www.stan2web.net/).
+The primary goal of MFA is to **quantify all flows and stocks** in a defined system, along with their associated uncertainties. For a comprehensive introduction to the theory and applications of MFA, refer to the standard handbook [[1]](#references). This project has been highly inspired by [STAN Software](https://www.stan2web.net/).
 
 <p align="center">
     <img src="assets/mfa.png" alt="Material Flow Analysis" width="500">
@@ -90,7 +90,7 @@ Solving a problem involves these steps:
 - **Validation:**
   Verifying the quality of the solution e.g. magnitude of residual terms, possibly going back to step (ii).
 
-We summarize the steps below in a self-contained example that loads the model from article [2].
+We summarize the steps below in a self-contained example that loads the model from article [[2]](#references).
 
 ```julia
 # Load the package.
@@ -205,7 +205,7 @@ $ julia --project test/runtests.jl
 
 ## Parsing from STAN Solver
 
-The module `STANModule` contains two main methods to allow loading model data, both intermediate and final, produced by the [STAN MFA/SEFA solver](https://www.stan2web.net/) [3].
+The module `STANModule` contains two main methods to allow loading model data, both intermediate and final, produced by the [STAN MFA/SEFA solver](https://www.stan2web.net/) [[3]](#references).
 
 To load model data (`*.csv` files) exported from the data explorer, add the corresponding files under a `models/name/data` folder then use:
 
