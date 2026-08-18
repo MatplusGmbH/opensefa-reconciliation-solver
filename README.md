@@ -2,7 +2,7 @@
 
 ## Introduction
 
-`OpenSEFA.jl` is a Julia package designed for modeling and solving **nonlinear data reconciliation problems** within the context of **Substance & Energy Flow Analysis (SeFA)** and **Material Flow Analysis (MFA)**. These methodologies serve as powerful decision-support tools across diverse fields, including but not limited to:
+`OpenSEFA.jl` is a Julia package designed for modeling and solving **nonlinear data reconciliation problems** within the context of **Substance & Energy Flow Analysis (SEFA)** and **Material Flow Analysis (MFA)**. These methodologies serve as powerful decision-support tools across diverse fields, including but not limited to:
 
 - **Environmental management**
 - **Waste resource management**
