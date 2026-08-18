@@ -1,0 +1,45 @@
+Information and Statistics:
+
+System name:	Contradiction1
+Document ID:	3453129e-faf1-4365-a798-76e6ce5bf5b1
+
+Quantities
+Processes:	4	
+	Stock:	0
+	Subsystems:	0
+	with TCs:	0
+Flows:	8
+Literature ref.:	0
+Remarks:	1
+Layers:	1
+Periods:	1
+
+Model complexity:	12
+
+Total complexity:	12
+
+Level of model documentation:	0.00 %
+Processes with description:	0
+Flows with description:	0
+
+Level of input documentation:	0.00 %
+Stock values with remarks:	0
+Flow values with remarks:	0
+Transfer coefficients with remarks:	0
+
+Input level:	50.00 %
+Stock values:	0.00 %
+Stock delta:	0.00 %
+Flow values:	50.00 %
+Transfer coefficients:	0.00 %
+
+Calculation level (mass):	0.00 %
+Stock values:	0.00 %	
+Stock delta:	0.00 %
+Flow values:	0.00 %
+
+System description:
+The contradiction warning should state that one or more than one of the flows F1, F2, F3 and F4 are involved in a contradiction issue. Reason: the mass balance of the unified processes (i.e. in this case the balance of import and export flows) is not fulfilled. The sum of F1+F2 is not equal to the sum of F3 + F4.
+
+Key words:
+Goods;2025

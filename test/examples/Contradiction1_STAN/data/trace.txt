@@ -1,0 +1,77 @@
+Vector of variables (Value | Key | Info) = 
+[
+   ?               | FV:4                 | F5:Mass flow:Good:2025,
+   ?               | FV:5                 | F6:Mass flow:Good:2025,
+   ?               | FV:6                 | F7:Mass flow:Good:2025,
+   ?               | FV:7                 | F8:Mass flow:Good:2025,
+   ?               | BI:0                 | P0:Total import:Good:2025,
+   ?               | BO:0                 | P0:Total export:Good:2025,
+   ?               | BD:0                 | P0:Total stock delta:Good:2025,
+   ?               | BS:4                 | P0:Total stock value:Good:2025,
+   100000          | FV:0                 | F1:Mass flow:Good:2025,
+   200000          | FV:1                 | F2:Mass flow:Good:2025,
+   150000          | FV:2                 | F3:Mass flow:Good:2025,
+   180000          | FV:3                 | F4:Mass flow:Good:2025
+]
+
+Vector of results (Value | Key | Info) = 
+[
+   1.33570450418442 | FV:4                 | F5:Mass flow:Good:2025,
+   1.63734729667845 | FV:5                 | F6:Mass flow:Good:2025,
+   1.03411474228197 | FV:6                 | F7:Mass flow:Good:2025,
+   0.786408271789727 | FV:7                 | F8:Mass flow:Good:2025,
+   0.863916783879695 | BI:0                 | P0:Total import:Good:2025,
+   1.07206116259593 | BO:0                 | P0:Total export:Good:2025,
+   1.17084534634464 | BD:0                 | P0:Total stock delta:Good:2025,
+   0.692586832231211 | BS:4                 | P0:Total stock value:Good:2025,
+   0.634920634920635 | FV:0                 | F1:Mass flow:Good:2025,
+   1.26984126984127 | FV:1                 | F2:Mass flow:Good:2025,
+   0.952380952380952 | FV:2                 | F3:Mass flow:Good:2025,
+   1.14285714285714 | FV:3                 | F4:Mass flow:Good:2025
+]
+
+**************************************
+*** Output of equations (F-Matrix) ***
+**************************************
+
+Legend (Key | Info):
+[
+   FV:4            | F5:Mass flow:Good:2025,
+   FV:5            | F6:Mass flow:Good:2025,
+   FV:6            | F7:Mass flow:Good:2025,
+   FV:7            | F8:Mass flow:Good:2025,
+   BI:0            | P0:Total import:Good:2025,
+   BO:0            | P0:Total export:Good:2025,
+   BD:0            | P0:Total stock delta:Good:2025,
+   BS:4            | P0:Total stock value:Good:2025,
+   FV:0            | F1:Mass flow:Good:2025,
+   FV:1            | F2:Mass flow:Good:2025,
+   FV:2            | F3:Mass flow:Good:2025,
+   FV:3            | F4:Mass flow:Good:2025
+]
+
+Equations:
+BS:4 = 0
+BI:0 - FV:0 - FV:1 = 0
+BO:0 - FV:2 - FV:3 = 0
+BD:0 + BO:0 - BI:0 = 0
+FV:0 + FV:5 - FV:4 = 0
+FV:4 - FV:2 - FV:7 = 0
+FV:1 - FV:5 - FV:6 = 0
+FV:6 + FV:7 - FV:3 = 0
+
+Vector of results (Value | Key | Info) = 
+[
+   1.33570450418442 | FV:4                 | F5:Mass flow:Good:2025,
+   1.63734729667845 | FV:5                 | F6:Mass flow:Good:2025,
+   1.03411474228197 | FV:6                 | F7:Mass flow:Good:2025,
+   0.786408271789727 | FV:7                 | F8:Mass flow:Good:2025,
+   0.863916783879695 | BI:0                 | P0:Total import:Good:2025,
+   1.07206116259593 | BO:0                 | P0:Total export:Good:2025,
+   1.17084534634464 | BD:0                 | P0:Total stock delta:Good:2025,
+   0.692586832231211 | BS:4                 | P0:Total stock value:Good:2025,
+   0.634920634920635 | FV:0                 | F1:Mass flow:Good:2025,
+   1.26984126984127 | FV:1                 | F2:Mass flow:Good:2025,
+   0.952380952380952 | FV:2                 | F3:Mass flow:Good:2025,
+   1.14285714285714 | FV:3                 | F4:Mass flow:Good:2025
+]

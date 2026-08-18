@@ -108,7 +108,7 @@ end
 
 @testset "Logging error information for infeasible problems" begin
   if isdir(MODELS_PATH)
-    m = only(filter(x -> basename(x) == "Contradiction1", all_models()))
+    m = only(filter(x -> basename(x) == "Contradiction1_STAN", all_models()))
     strace = parse(STANTrace, m)
     rec = convert(ReconciliationProblem, strace)
     sol = solve(rec)

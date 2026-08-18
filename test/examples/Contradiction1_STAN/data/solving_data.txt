@@ -1,0 +1,24 @@
+Number of equations:
+8
+
+Number of variables:
+12
+
+Status:
+CONTRADICTORY
+
+Modelling time (s):
+0.021
+
+Computation time (s):
+0.006
+
+STAN version:
+2.7.101
+
+Machine information:
+CPU: Intel(R) Core(TM) i7-10510U CPU @ 1.80GHz (4C/8T)
+RAM: 16 GB
+GPU: Intel(R) UHD Graphics
+Storage: NVMe Samsung SSD 980
+OS: Microsoft Windows 11 Pro 10.0.26200
