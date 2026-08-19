@@ -20,8 +20,6 @@ The primary goal of MFA is to **quantify all flows and stocks** in a defined sys
 
 - **Version Information:** The current release version is stored in the `Project.toml` file, and release updates are tracked in the `NEWS.md` file for easy reference.
 
-- **Deployment Process:** Deployments to production are automated through our CI/CD pipeline when changes are merged to `main`. You can monitor deployment status through the pipeline output — a green checkmark typically indicates successful deployment.
-
 ## Key Features
 
 - **Nonlinear optimization**: Solve data reconciliation problems with both linear and bilinear constraints.
@@ -66,7 +64,15 @@ This formulation supports both linear and bilinear constraints, allowing for bro
 
 ## Getting Started
 
-To install this package, clone the repository then instantiate it [using the Julia package manager](https://julialang.github.io/Pkg.jl/v1/managing-packages/) by activating the `pkg` mode (type `]`, and to leave it, type `<backspace>`), followed by
+**Prerequisites:** [Julia](https://julialang.org/downloads/) 1.10 or later.
+
+To install this package, clone the repository:
+```bash
+$ git clone https://github.com/MatplusGmbH/opensefa-reconciliation-solver.git
+$ cd opensefa-reconciliation-solver
+```
+
+Then instantiate it [using the Julia package manager](https://julialang.github.io/Pkg.jl/v1/managing-packages/) by activating the `pkg` mode (type `]`, and to leave it, type `<backspace>`), followed by
 
 ```julia
 $ julia --project
@@ -207,7 +213,7 @@ $ julia --project test/runtests.jl
 
 The module `STANModule` contains two main methods to allow loading model data, both intermediate and final, produced by the [STAN MFA/SEFA solver](https://www.stan2web.net/) [[3]](#references).
 
-To load model data (`*.csv` files) exported from the data explorer, add the corresponding files under a `models/name/data` folder then use:
+To load model data (`*.csv` files) exported from the data explorer, add the corresponding files under a `test/examples/<modelname>/data/` folder then use:
 
 ```julia
 using OpenSEFA
@@ -248,15 +254,7 @@ using OpenSEFA
 include(joinpath(MODELS_PATH, "seven_flows.jl"))
 rec = seven_flows_cencic_2012()
 
-julia> presolve(rec) |> unwrap
-PresolvedReconciliationProblem(• Data reconciliation optimization problem with:
-  • Name: Seven flows Cencic2016
-  • Equations: 4
-  • Variables: 7
-    • Measured: 4
-    • Unmeasured: 3
-    • Fixed: 0
-, {"m2" = 50.0}, ["m1", "m3", "m4", "m5", "m6", "m7", "tc34"], ["m2"], RedundancyData([1, 2, 3, 4], [50.0, 0.0, 0.0, 0.0], [1.0 0.0 0.0 0.0; -1.0 1.0 0.0 0.0; … ; 0.0 0.0 -1.0 0.0; 0.0 0.0 0.0 -1.0], Int64[], {"m1" = 1, "m3" = 2, "m5" = 3, "tc34" = 4, "m4" = 5, "m6" = 6, "m7" = 7}, {("m3", "tc34") = 8}), {}, {})
+presolve(rec) |> unwrap
 ```
 
 This will apply precomputations to the given problem, potentially returning a smaller problem.
@@ -272,7 +270,7 @@ The solution interface implemented via `solve` by default internally applies pre
 ```julia
 using OpenSEFA
 
-include(joinpath(pkgdir(OpenSEFA), "test", "examples", "seven_flows.jl"))
+include(joinpath(MODELS_PATH, "seven_flows.jl"))
 rec = seven_flows_cencic_2012()
 
 # Same as solve(rec).
@@ -281,12 +279,23 @@ sol = solve(rec, DefaultSolver())
 
 The default solver will perform these steps:
 
-- Apply presolve, using `NonlinearSolve` default polyalgorithm to find suitable starting values.
-- Apply solve, using `Ipopt` NLP solver.
-  - If it fails the starting values solution is used.
-  - Otherwise, the candidate solution found by NLP is used.
+1. **Presolve**: Simplify the problem through structural reductions. If fully solved, return immediately.
+2. **Starting values**: Compute initial values for unmeasured variables using `NonlinearSolve`. If the problem is fully determined, use these as the final solution.
+3. **Optimize**: Solve the full weighted least-squares problem using the JuMP framework (with `Ipopt` as default solver). Starting values from step 2 are used as a warm start when available.
 
-For more exploratory cases, you may want to choose another solver backend supported by JuMP. For example, the following script solves the seven flows problem using [MadNLP](https://github.com/MadNLP/MadNLP.jl) solver (without presolving unless explicitly stated). The way we do so is we pass the optimization backend via the JuMP interface solver:
+The presolving and solving for starting values can be skipped by using the `JuMPSolver` instead:
+
+```julia
+using OpenSEFA
+
+include(joinpath(MODELS_PATH, "seven_flows.jl"))
+rec = seven_flows_cencic_2012()
+
+# Solving without presolve and starting values.
+sol = solve(rec, JuMPSolver())
+```
+
+For more exploratory cases, you may want to choose another solver backend supported by JuMP. For example, the following script solves the seven flows problem using [MadNLP](https://github.com/MadNLP/MadNLP.jl) solver. The way we do so is we pass the optimization backend via the JuMP interface solver:
 
 ```julia
 using OpenSEFA
@@ -295,7 +304,8 @@ using MadNLP
 include(joinpath(MODELS_PATH, "seven_flows.jl"))
 rec = seven_flows_cencic_2012()
 
-sol = solve(rec, JuMPSolver(solver=MadNLP.Optimizer))
+sol_without_presolve = solve(rec, JuMPSolver(optimizer=MadNLP.Optimizer))
+sol_with_presolve = solve(rec, DefaultSolver(optimization_solver=JuMPSolver(optimizer=MadNLP.Optimizer)))
 ```
 
 ## Using the Solver via HTTP Requests
@@ -307,7 +317,7 @@ First you need to download Julia and install dependencies as explained previousl
 2. Load the Julia backend and also load the server in the repository root:
 
 ```bash
-$ julia --project -e "using OpenSEFA; start_server()"
+julia --project -e "using OpenSEFA; start_server()"
 ```
 
 If loading is performed correctly you should see a message similar to this:
@@ -321,8 +331,10 @@ If loading is performed correctly you should see a message similar to this:
 \____/_/|_|\__, /\__, /\___/_/ /_/ 
           /____//____/   
 
-[ Info: Started server: http://0.0.0.0:8080
-[ Info: Documentation: http://0.0.0.0:8080/docs
+[ Info: 📦 Version 1.10.2 (2026-04-18)
+[ Info: ✅ Started server: http://0.0.0.0:8080
+[ Info: 📖 Documentation: http://0.0.0.0:8080/docs
+[ Info: 📊 Metrics: http://0.0.0.0:8080/docs/metrics
 [ Info: Listening on: 0.0.0.0:8080, thread id: 1
 ```
 
@@ -341,14 +353,14 @@ curl http://localhost:8080/health
 
 It should return an output similar to:
 
-```
-% curl http://localhost:8080/health
-{"uptime (seconds)":45.68,"requests":{"total":0,"max time (seconds)":0.0,"average time (seconds)":0.0}}%
+```bash
+curl http://localhost:8080/health
+{"requests":{"average time (sec)":0.0,"max time (sec)":0.0,"total":0},"uptime (sec)":45.0}
 ```
 
 ### `solve` endpoint
 
-Run the `curl` command to create a request to the server, passing the model formatted as JSON in the payload. This should run the model and return the result. Here is a full working example for the model from the file `test/examples/seven_flows.json`:
+Run the `curl` command to create a request to the server, passing the model formatted as JSON in the payload. This should run the model and return the result. Here is a full working minimal example:
 
 ```bash
 curl -X POST http://localhost:8080/solve -H "Content-Type: application/json" -d '{"content": {"name": "SEFMN Example", "variables": [{"name": "F1_mass_N1", "is_transfer_coefficient": false, "type": "MeasuredVariable", "value": 1, "uncertainty": 0.1}, {"name": "F2_mass_N1", "is_transfer_coefficient": false, "type": "UnmeasuredVariable"}, {"name": "F3_mass_N1", "is_transfer_coefficient": false, "type": "MeasuredVariable", "value": 2, "uncertainty": 0.3}], "equations": [{"constant_term": {"value": 0}, "linear_terms": [{"name": "F1_mass_N1", "factor": 1}, {"name": "F3_mass_N1", "factor": 1}, {"name": "F2_mass_N1", "factor": -1}], "bilinear_terms": []}], "solver": "JuMP"}}'
@@ -431,10 +443,6 @@ start build/index.html
 
 For detailed troubleshooting, contributing guidelines, and documentation style guide, see the [Contributing](https://matplusgmbh.github.io/opensefa-reconciliation-solver/stable/contributing.html) page in the documentation.
 
-## Benchmark
-
-An evaluation for each model and comparison with reference solutions by STAN for different models are found in the `OpenSEFABenchmarks` package.
-
 ## Feedback and Contributions
 
 We welcome contributions, feedback, and suggestions for improvement. Please contact the [Matplus GmbH](https://www.matplus.eu/).
@@ -457,4 +465,4 @@ Third-party Julia dependencies retain their own licenses.
 
 [2] Cencic, Oliver. _Nonlinear data reconciliation in material flow analysis with software STAN._ Sustainable Environment Research 26, no. 6 (2016): 291-298.
 
-[3] STAN https://www.stan2web.net/ _STAN v2.6._ Software developed by researchers at the Research Unit of Waste and Resource Management at TU Wien, and inka software.
+[3] STAN https://www.stan2web.net/ _STAN v2.7._ Software developed by researchers at the Research Unit of Waste and Resource Management at TU Wien, and inka software.

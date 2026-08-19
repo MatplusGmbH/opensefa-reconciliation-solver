@@ -325,7 +325,7 @@ When making significant changes, update `NEWS.md`:
    - What changes were made?
    - Any breaking changes?
    - Related issues?
-7. Confirm that you have read and accept the [Contributor License Agreement](../../CLA.md)
+7. Confirm that you have read and accept the [Contributor License Agreement](https://github.com/MatplusGmbH/opensefa-reconciliation-solver/blob/main/CLA.md)
 
 ## Getting Help
 
@@ -337,7 +337,7 @@ When making significant changes, update `NEWS.md`:
 
 OpenSEFA.jl is licensed under the [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0/). The full license text is in the [`LICENSE`](https://github.com/MatplusGmbH/opensefa-reconciliation-solver/blob/main/LICENSE) file at the package root.
 
-By contributing to OpenSEFA.jl, you accept the [Contributor License Agreement](../../CLA.md), which provides for two grants:
+By contributing to OpenSEFA.jl, you accept the [Contributor License Agreement](https://github.com/MatplusGmbH/opensefa-reconciliation-solver/blob/main/CLA.md), which provides for two grants:
 
 - **To the community:** your contributions are licensed under the PolyForm Noncommercial License 1.0.0 when distributed as part of the project.
 - **To Matplus:** you grant Matplus GmbH a perpetual, irrevocable license to use your contributions for any purpose, including commercial products and services.
