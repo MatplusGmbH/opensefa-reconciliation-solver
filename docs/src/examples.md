@@ -10,7 +10,7 @@ The seven flows problem from [[C16]](@ref) is a canonical example in data reconc
 using OpenSEFA
 
 # Load the problem definition
-include(joinpath(pkgdir(OpenSEFA), "test", "examples", "seven_flows.jl"))
+include(joinpath(MODELS_PATH, "seven_flows.jl"))
 rec = seven_flows_cencic_2012()
 
 # Solve with default settings
@@ -18,7 +18,7 @@ sol = solve(rec)
 
 # Inspect the solution
 println("Objective value: ", sol.objective_value)
-println("Max constraint violation: ", sol.max_equation_discrepancy)
+println("Max constraint violation: ", sol.score.residual)
 ```
 
 ## Using Presolve
@@ -28,18 +28,18 @@ The presolve functionality applies symbolic and numeric simplifications to reduc
 ```julia
 using OpenSEFA
 
-include(joinpath(pkgdir(OpenSEFA), "test", "examples", "seven_flows.jl"))
+include(joinpath(MODELS_PATH, "seven_flows.jl"))
 rec = seven_flows_cencic_2012()
 
 # Apply presolve to simplify the problem
-pre = presolve(rec)
+pre = unwrap(presolve(rec))
 
 # The presolved problem may have fewer variables/equations
 println("Original problem: ", rec)
-println("Presolved problem: ", pre)
+println("Presolved problem: ", pre.pre)
 
 # Solve the presolved problem
-sol = solve(pre)
+sol = solve(pre.pre)
 ```
 
 !!! tip
@@ -51,15 +51,16 @@ OpenSEFA.jl supports multiple solver backends through the JuMP interface.
 
 ### Using the Default Solver
 
-The default solver applies a two-stage approach:
+The default solver applies three steps:
 
-1. Use `NonlinearSolve` polyalgorithm to find initial values via presolve
-2. Refine with `Ipopt` NLP solver
+1. **Presolve**: Simplify the problem through structural reductions. If fully solved, return immediately.
+2. **Starting values**: Compute initial values for unmeasured variables using `NonlinearSolve`. If the problem is fully determined, use these as the final solution.
+3. **Optimize**: Solve the full weighted least-squares problem using the JuMP framework (with `Ipopt` as default solver). Starting values from step 2 are used as a warm start when available.
 
 ```julia
 using OpenSEFA
 
-include(joinpath(pkgdir(OpenSEFA), "test", "examples", "seven_flows.jl"))
+include(joinpath(MODELS_PATH, "seven_flows.jl"))
 rec = seven_flows_cencic_2012()
 
 # Explicit use of DefaultSolver (equivalent to solve(rec))
@@ -74,11 +75,11 @@ You can use any JuMP-compatible solver:
 using OpenSEFA
 using MadNLP
 
-include(joinpath(pkgdir(OpenSEFA), "test", "examples", "seven_flows.jl"))
+include(joinpath(MODELS_PATH, "seven_flows.jl"))
 rec = seven_flows_cencic_2012()
 
 # Solve using MadNLP instead of Ipopt
-sol = solve(rec, JuMPSolver(solver=MadNLP.Optimizer))
+sol = solve(rec, JuMPSolver(optimizer=MadNLP.Optimizer))
 ```
 
 Other compatible solvers include:
@@ -96,7 +97,7 @@ OpenSEFA.jl can import models created in STAN software.
 using OpenSEFA
 
 # Path to model directory containing trace.txt
-path = joinpath(MODELS_PATH, "4_PVC Austria (1950-1994)")
+path = joinpath(MODELS_PATH, "Cencic_2016_STAN")
 
 # Parse the STAN trace file
 strace = parse(STANTrace, path)
@@ -107,9 +108,9 @@ rec = convert(ReconciliationProblem, strace)
 # Solve the problem
 sol = solve(rec)
 
-println("Solution for PVC Austria model:")
+println("Solution for Seven Flows model:")
 println("  Objective value: ", sol.objective_value)
-println("  Variables: ", length(sol.variables))
+println("  Variables: ", length(sol.variables_value))
 ```
 
 !!! note
@@ -124,14 +125,14 @@ println("  Variables: ", length(sol.variables))
 using OpenSEFA
 
 # Path to model directory containing CSV data files
-path = joinpath(MODELS_PATH, "1a_Example")
+path = joinpath(MODELS_PATH, "Cencic_2016_STAN")
 
 # Load data from STAN CSV exports
 sdata = load_stan_data(path)
 
 # Inspect the loaded data
 println("Flows data: ", sdata.flows)
-println("Variables data: ", sdata.variables)
+println("Variables data: ", sdata.flowvalues)
 ```
 
 ## Working with JSON Models
@@ -140,15 +141,10 @@ Models can be defined in JSON format for easy integration with web applications:
 
 ```julia
 using OpenSEFA
-using JSON3
 
 # Load a JSON model
-json_path = joinpath(pkgdir(OpenSEFA), "test", "examples", "seven_flows.json")
-json_data = read(json_path, String)
-model = JSON3.read(json_data)
-
-# Convert to ReconciliationProblem and solve
-# (Implementation depends on your JSON schema)
+json_path = joinpath(MODELS_PATH, "seven_flows.json")
+model = load_model(json_path)
 ```
 
 ## Programmatic Problem Construction
@@ -157,36 +153,38 @@ You can build problems programmatically using Julia data structures:
 
 ```julia
 using OpenSEFA
-using Dictionaries
 
 # Define variables
-variables = Dictionary(
-    ["F1", "F2", "F3"],
-    [
-        MeasuredVariable(1.0, 0.1),      # value=1.0, uncertainty=0.1
-        UnmeasuredVariable(),
-        MeasuredVariable(2.0, 0.3)
-    ]
-)
+variables = [
+    MeasuredVariable(name = "F1", value = 1.0, uncertainty = 0.1),
+    UnmeasuredVariable(name = "F2"),
+    MeasuredVariable(name = "F3", value = 2.0, uncertainty = 0.3)
+]
 
-# Define equations (mass balance: F1 + F3 = F2)
+# Define equations (mass balance: F1 + F3 - F2 = 0)
 equations = [
     Equation(
-        constant_term = 0.0,
-        linear_terms = Dictionary(["F1", "F2", "F3"], [1.0, -1.0, 1.0]),
-        bilinear_terms = Dictionary()  # No bilinear terms
+        ConstantTerm(0.0),
+        [LinearTerm("F1", 1.0), LinearTerm("F3", 1.0), LinearTerm("F2", -1.0)],
+        BilinearTerm[]
     )
 ]
 
-# Create the problem
-rec = ReconciliationProblem(
-    name = "Simple Example",
-    variables = variables,
-    equations = equations
-)
+# Create the problem and add variables/equations
+rec = ReconciliationProblem(name = "Simple Example")
+add_variable!(rec, variables)
+add_equation!(rec, equations)
 
 # Solve
 sol = solve(rec)
+```
+
+Equations can alternatively be parsed from a string:
+```julia
+using OpenSEFA
+
+# Define equation F1 + F3 - F2 = 0
+eq = parse_equation("F1 + F3 - F2 = 0")
 ```
 
 ## Inspecting Solutions
@@ -196,24 +194,21 @@ The solution object provides various methods to inspect results:
 ```julia
 using OpenSEFA
 
-include(joinpath(pkgdir(OpenSEFA), "test", "examples", "seven_flows.jl"))
+include(joinpath(MODELS_PATH, "seven_flows.jl"))
 rec = seven_flows_cencic_2012()
 sol = solve(rec)
 
 # Access solution values
 println("Reconciled variable values:")
-for (name, value) in sol.variables
-    println("  $name = $value")
-end
+display(sol.variables_value)
 
 # Check solution quality
 println("\nSolution quality:")
 println("  Objective: ", sol.objective_value)
-println("  Max equation discrepancy: ", sol.max_equation_discrepancy)
-println("  Max fixed var discrepancy: ", sol.max_fixed_discrepancy)
+display(sol.score)
 
 # Check if solution is acceptable
-if sol.max_equation_discrepancy < 1e-6
+if sol.score.residual < 1e-6
     println("  ✓ Solution satisfies constraints")
 else
     println("  ✗ Warning: Large constraint violations")
@@ -237,14 +232,14 @@ try
         @warn "Large objective value, solution may be poor"
     end
 
-    if sol.max_equation_discrepancy > 1e-4
+    if sol.score.residual > 1e-4
         @warn "Constraint violations detected"
     end
 
 catch e
     @error "Solver failed" exception=e
     # Fall back to alternative solver or settings
-    sol = solve(rec, JuMPSolver(solver=AlternativeSolver.Optimizer))
+    sol = solve(rec, JuMPSolver(optimizer=AlternativeSolver.Optimizer))
 end
 ```
 
@@ -259,18 +254,18 @@ For large-scale problems:
 
 ```julia
 using OpenSEFA
+using Ipopt
 
 # For large problems, explicit presolve can help
 rec = # ... large problem ...
-pre = presolve(rec)
+presolve_result = presolve(rec)
+pre = unwrap(presolve_result).pre
 
 # Solve with custom tolerances (if using JuMP interface)
 sol = solve(pre, JuMPSolver(
-    solver = Ipopt.Optimizer,
-    solver_options = Dict(
-        "tol" => 1e-6,
-        "max_iter" => 1000
-    )
+    optimizer = Ipopt.Optimizer,
+    tol = 1e-6,
+    max_iter = 1000
 ))
 ```
 

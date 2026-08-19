@@ -81,7 +81,7 @@ Documentation is a critical part of this project. Here's how to contribute:
 
 1. Navigate to the documentation directory:
    ```bash
-   cd OpenSEFA/docs
+   cd docs
    ```
 
 2. Install documentation dependencies:

@@ -36,12 +36,12 @@
 
 #### [STAN]
 
-- STAN https://www.stan2web.net/ *STAN v2.6.* Software developed by researchers at the Research Unit of Waste and Resource Management at TU Wien, and inka software.
+- STAN https://www.stan2web.net/ *STAN v2.7.* Software developed by researchers at the Research Unit of Waste and Resource Management at TU Wien, and inka software.
 
 ```
 @misc{STAN,
   author       = "{Research Unit of Waste and Resource Management, TU Wien and inka software}",
-  title        = "{STAN v2.6}",
+  title        = "{STAN v2.7}",
   year         = "2024",
   url          = "https://www.stan2web.net/",
   note         = "Software developed by researchers at the Research Unit of Waste and Resource Management at TU Wien and inka software."
