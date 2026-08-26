@@ -14,10 +14,9 @@ We welcome contributions, feedback, and suggestions for improvement!
 
 ### Branch Strategy
 
-- **`main`** branch is reserved exclusively for production deployments
-- **`develop`** branch is for active development
-- All pull requests for bug fixes, new features, and development work should target the `develop` branch
-- Create feature branches from `develop` for your work
+- **`main`** is the default branch
+- Create feature branches from `main` for your work
+- All pull requests should target the `main` branch
 
 ### Setting Up Your Development Environment
 
@@ -41,8 +40,8 @@ We welcome contributions, feedback, and suggestions for improvement!
 
 1. Create a feature branch:
    ```bash
-   git checkout develop
-   git pull origin develop
+   git checkout main
+   git pull origin main
    git checkout -b feature/your-feature-name
    ```
 
@@ -64,7 +63,7 @@ We welcome contributions, feedback, and suggestions for improvement!
    git push origin feature/your-feature-name
    ```
 
-6. Create a pull request targeting the `develop` branch
+6. Create a pull request targeting the `main` branch
 
 ## Contributing to Documentation
 

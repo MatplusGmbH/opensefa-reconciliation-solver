@@ -16,7 +16,7 @@ The primary goal of MFA is to **quantify all flows and stocks** in a defined sys
 
 ## Development Workflow
 
-- **Branch Strategy**: The `main` branch is reserved exclusively for production deployments. All pull requests for bug fixes, new features, and development work should target the `develop` branch.
+- **Branch Strategy**: Pull requests for bug fixes, new features, and development work should target the `main` branch.
 
 - **Version Information:** The current release version is stored in the `Project.toml` file, and release updates are tracked in the `NEWS.md` file for easy reference.
 
