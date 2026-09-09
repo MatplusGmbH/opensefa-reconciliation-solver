@@ -10,7 +10,7 @@ using XLSX: XLSXFile, readxlsx
     @warn "Skipping excel export test: MODELS_PATH=$(MODELS_PATH) not found."
   else
     # Instantiate problem.
-    path = joinpath(MODELS_PATH, "1_SEFMN_Example")
+    path = joinpath(MODELS_PATH, "Cencic_2016_STAN")
     strace = parse(STANTrace, path)
     rec = convert(ReconciliationProblem, strace)
 
@@ -23,6 +23,6 @@ using XLSX: XLSXFile, readxlsx
     content = readxlsx(filename)
     @test content isa XLSXFile
     @test content[1].name == "Sheet1"
-    @test content[2].name == "1_SEFMN_Example"
+    @test content[2].name == "Cencic_2016_STAN"
   end
 end

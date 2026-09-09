@@ -6,7 +6,7 @@ This guide will help you get up and running with OpenSEFA.jl.
 
 To install this package, clone the repository and instantiate it using the Julia package manager:
 
-```julia
+```bash
 $ git clone https://github.com/MatplusGmbH/opensefa-reconciliation-solver.git
 $ cd opensefa-reconciliation-solver
 $ julia --project
@@ -59,7 +59,7 @@ Here's a complete example that loads and solves a simple problem:
 using OpenSEFA
 
 # Load the seven flows example from the test suite
-include(joinpath(pkgdir(OpenSEFA), "test", "examples", "seven_flows.jl"))
+include(joinpath(MODELS_PATH, "seven_flows.jl"))
 
 # Parse the equations and load into Julia data structures
 rec = seven_flows_cencic_2012()
@@ -93,8 +93,15 @@ julia> sol
     • Unmeasured: 3
     • Fixed: 1
   • Objective value: 0.2959
-  • Equations discrepancy (max abs): 1.026e-9
-  • Fixed variables discrepancy (max abs): 0.0
+  • Status: FEASIBLE_WITH_UNOBSERVABLE_VARIABLES
+  • Globality proven: false
+  • Solution score:
+    • Percentage of solved variables: 1.0
+    • Percentage of assigned variables: 1.0
+    • Percentage of uniquely solved variables: 0.75
+    • Percentage of solved equations: 1.0
+    • Residual: 3.0145e-8
+    • Max relative residual: 4.1816e-13
 ```
 
 ## Loading STAN Models
@@ -108,7 +115,7 @@ Export your data from STAN's data explorer to CSV files, then:
 ```julia
 using OpenSEFA
 
-path = joinpath(MODELS_PATH, "1a_Example")
+path = joinpath(MODELS_PATH, "Cencic_2016_STAN")
 sdata = load_stan_data(path)
 ```
 
@@ -125,7 +132,7 @@ To load a complete assembled model from STAN:
 ```julia
 using OpenSEFA
 
-path = joinpath(MODELS_PATH, "4_PVC Austria (1950-1994)")
+path = joinpath(MODELS_PATH, "Cencic_2016_STAN")
 strace = parse(STANTrace, path)
 rec = convert(ReconciliationProblem, strace)
 sol = solve(rec)

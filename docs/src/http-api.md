@@ -20,7 +20,7 @@ If successful, you should see output similar to:
 \____/_/|_|\__, /\__, /\___/_/ /_/
           /____//____/
 
-[ Info: 📦 Version 1.7.1 (2025-02-06)
+[ Info: 📦 Version 1.10.2 (2026-04-18)
 [ Info: ✅ Started server: http://0.0.0.0:8080
 [ Info: 📖 Documentation: http://0.0.0.0:8080/docs
 [ Info: 📊 Metrics: http://0.0.0.0:8080/docs/metrics
@@ -48,62 +48,26 @@ curl http://localhost:8080/health
 
 ```json
 {
-  "uptime (seconds)": 45.68,
   "requests": {
-    "total": 12,
-    "max time (seconds)": 2.34,
-    "average time (seconds)": 0.87
-  }
+    "average time (sec)":0.87,
+    "max time (sec)":2.34,
+    "total": 12
+  },
+  "uptime (sec)": 45.68
 }
 ```
 
 **Response Fields:**
-- `uptime (seconds)`: Time since server started
+- `uptime (sec)`: Time since server started
 - `requests.total`: Total number of requests processed
-- `requests.max time (seconds)`: Maximum request processing time
-- `requests.average time (seconds)`: Average request processing time
+- `requests.max time (sec)`: Maximum request processing time
+- `requests.average time (sec)`: Average request processing time
 
 ### Solve Problem
 
 **Endpoint:** `POST /solve`
 
-Solve a data reconciliation problem specified either by file path or JSON content.
-
-#### Method 1: Solve from File Path
-
-Send the path to a JSON file containing the problem definition.
-
-**Example Request:**
-
-```bash
-curl -X POST http://localhost:8080/solve \
-  -H "Content-Type: application/json" \
-  -d '{
-    "filepath": "/path/to/model/seven_flows.json"
-  }'
-```
-
-**Example Response:**
-
-```json
-{
-  "status": "success",
-  "solution": {
-    "objective_value": 0.2959,
-    "variables": {
-      "F1_mass_N1": 1.12,
-      "F2_mass_N1": 3.45,
-      "F3_mass_N1": 2.33,
-      ...
-    },
-    "max_equation_discrepancy": 1.026e-9,
-    "max_fixed_discrepancy": 0.0
-  }
-}
-```
-
-#### Method 2: Solve from JSON Content
-
+Solve a data reconciliation problem specified by JSON content.
 Send the complete problem definition in the request body.
 
 **Example Request:**
@@ -156,29 +120,39 @@ curl -X POST http://localhost:8080/solve \
 Success response (HTTP 200):
 ```json
 {
-  "status": "success",
-  "solution": {
-    "name": "Problem name",
-    "objective_value": 0.123,
-    "variables": {
-      "var1": 1.23,
-      "var2": 4.56,
-      ...
-    },
-    "max_equation_discrepancy": 1.0e-9,
-    "max_fixed_discrepancy": 0.0,
-    "num_equations": 5,
-    "num_variables": 8
-  }
+  "JuMP optimizer": "IpoptMathOptInterfaceExt.Optimizer",
+  "JuMP solve time (s)": 0.006921052932739258,
+  "JuMP status": "LOCALLY_SOLVED",
+  "Solve time (s)": 0.008294383,
+  "equations_value": {
+    "1": -4.694022948115162e-13
+  },
+  "globality_proven": true,
+  "objective_value": 1.2297865261038426e-17,
+  "residual_value": 4.694e-13,
+  "status": "FEASIBLE",
+  "uncertainties": {
+    "F1_mass_N1": 0.1,
+    "F2_mass_N1": 0.31622776601683794,
+    "F3_mass_N1": 0.3
+  },
+  "unobservable unmeasured variables": [
+    "0 unobservable unmeasured variables identified (not removed): ",
+    []
+  ],
+  "variables_value": {
+    "F1_mass_N1": 1.000000000133192,
+    "F2_mass_N1": 3.000000001106876,
+    "F3_mass_N1": 2.000000000973215
+  },
+  "version": "0.18.0"
 }
 ```
 
 Error response (HTTP 400/500):
 ```json
 {
-  "status": "error",
-  "message": "Error description",
-  "details": "Additional error details (optional)"
+  "message": "500: Internal Server Error"
 }
 ```
 
@@ -206,14 +180,14 @@ The JSON format for defining problems follows this schema:
       ],
       "bilinear_terms": [               // Optional
         {
-          "row_variable": "var1",
-          "col_variable": "var2",
+          "name1": "var1",
+          "name2": "var2",
           "factor": 0.5
         }
       ]
     }
   ],
-  "solver": "JuMP|Default|NonlinearSolve"  // Optional, default: "Default"
+  "solver": "JuMP"  // Alternative: "Default"
 }
 ```
 
@@ -290,7 +264,8 @@ problem = {
                 ],
                 "bilinear_terms": []
             }
-        ]
+        ],
+        "solver": "JuMP"
     }
 }
 
@@ -304,8 +279,7 @@ response = requests.post(
 # Parse response
 if response.status_code == 200:
     result = response.json()
-    print(f"Objective: {result['solution']['objective_value']}")
-    print(f"Variables: {result['solution']['variables']}")
+    print(json.dumps(result, indent=2))
 else:
     print(f"Error: {response.json()['message']}")
 ```
@@ -332,7 +306,8 @@ async function solveProblem() {
           ],
           bilinear_terms: []
         }
-      ]
+      ],
+      solver: "JuMP"
     }
   };
 
@@ -346,8 +321,8 @@ async function solveProblem() {
     const result = await response.json();
 
     if (response.ok) {
-      console.log("Objective:", result.solution.objective_value);
-      console.log("Variables:", result.solution.variables);
+      console.log("Objective:", result.objective_value);
+      console.log("Variables:", result.variables_value);
     } else {
       console.error("Error:", result.message);
     }
@@ -364,15 +339,13 @@ solveProblem();
 The API returns appropriate HTTP status codes:
 
 - **200 OK**: Request successful, solution found
-- **400 Bad Request**: Invalid request format or problem specification
 - **500 Internal Server Error**: Solver failed or internal error
 
 Error responses include a `message` field with details:
 
 ```json
 {
-  "status": "error",
-  "message": "Invalid variable type: UnknownType"
+  "message": "500: Internal Server Error"
 }
 ```
 

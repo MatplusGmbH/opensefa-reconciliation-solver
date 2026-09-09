@@ -297,7 +297,7 @@ For some reconciliation problems it can be proven that a local optimum is alread
 ### [Example with two global minima](@id nonuniqueness_example)
 
 The reconciliation problem as formulated [here](@ref problem_formulation) is non-convex and can have several local minima. This is demonstrated with the following example.
-Several slightly varying implementations of this example can be loaded from `uniqueness_1()`, `uniqueness_2()`, `uniqueness_3()` and `uniqueness_4()` in `OpenSEFA/test/solvers/jump_interface_module.jl`.
+Several slightly varying implementations of this example can be loaded from `uniqueness_1()`, `uniqueness_2()`, `uniqueness_3()` and `uniqueness_4()` in `test/solvers/jump_interface_module.jl`.
 
 ![Flows of non-uniqueness example](flow-nonuniqueness-example.jpg)
 
