@@ -49,4 +49,5 @@ makedocs(;
 
 deploydocs(;
   repo = "github.com/MatplusGmbH/opensefa-reconciliation-solver.git",
+  devbranch = "main",
   push_preview = true)
