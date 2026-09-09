@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>HTTP API · OpenSEFA.jl</title><meta name="title" content="HTTP API · OpenSEFA.jl"/><meta property="og:title" content="HTTP API · OpenSEFA.jl"/><meta property="twitter:title" content="HTTP API · OpenSEFA.jl"/><meta name="description" content="Documentation for OpenSEFA.jl."/><meta property="og:description" content="Documentation for OpenSEFA.jl."/><meta property="twitter:description" content="Documentation for OpenSEFA.jl."/><meta property="og:url" content="https://matplusgmbh.github.io/opensefa-reconciliation-solver/stable/http-api/"/><meta property="twitter:url" content="https://matplusgmbh.github.io/opensefa-reconciliation-solver/stable/http-api/"/><link rel="canonical" href="https://matplusgmbh.github.io/opensefa-reconciliation-solver/stable/http-api/"/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">OpenSEFA.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li><a class="tocitem" href="../getting-started/">Getting Started</a></li><li><a class="tocitem" href="../solving_strategies/">Solving Strategies</a></li><li><a class="tocitem" href="../examples/">Examples</a></li><li class="is-active"><a class="tocitem" href>HTTP API</a><ul class="internal"><li><a class="tocitem" href="#Starting-the-Server"><span>Starting the Server</span></a></li><li><a class="tocitem" href="#API-Endpoints"><span>API Endpoints</span></a></li><li><a class="tocitem" href="#JSON-Problem-Format"><span>JSON Problem Format</span></a></li><li><a class="tocitem" href="#Integration-with-OpenSEFA-editor"><span>Integration with OpenSEFA editor</span></a></li><li><a class="tocitem" href="#Client-Examples"><span>Client Examples</span></a></li><li><a class="tocitem" href="#Error-Handling"><span>Error Handling</span></a></li><li><a class="tocitem" href="#Performance-Considerations"><span>Performance Considerations</span></a></li><li><a class="tocitem" href="#Next-Steps"><span>Next Steps</span></a></li></ul></li><li><span class="tocitem">API Reference</span><ul><li><input class="collapse-toggle" id="menuitem-6-1" type="checkbox"/><label class="tocitem" for="menuitem-6-1"><span class="docs-label">Model</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../lib/model/ConstraintsModule/">ConstraintsModule</a></li><li><a class="tocitem" href="../lib/model/ConstraintParserModule/">ConstraintParserModule</a></li><li><a class="tocitem" href="../lib/model/ComparisonModule/">ComparisonModule</a></li><li><a class="tocitem" href="../lib/model/ErrorModule/">ErrorModule</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-6-2" type="checkbox"/><label class="tocitem" for="menuitem-6-2"><span class="docs-label">Algorithms</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../lib/algorithms/ReconciliationModule/">ReconciliationModule</a></li><li><a class="tocitem" href="../lib/algorithms/PresolveModule/">PresolveModule</a></li><li><a class="tocitem" href="../lib/algorithms/QCQPModule/">QCQPModule</a></li><li><a class="tocitem" href="../lib/algorithms/RowEchelonModule/">RowEchelonModule</a></li><li><a class="tocitem" href="../lib/algorithms/SparseRowEchelonModule/">SparseRowEchelonModule</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-6-3" type="checkbox"/><label class="tocitem" for="menuitem-6-3"><span class="docs-label">Solvers</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../lib/solvers/DefaultSolverModule/">DefaultSolverModule</a></li><li><a class="tocitem" href="../lib/solvers/JuMPInterfaceModule/">JuMPInterfaceModule</a></li><li><a class="tocitem" href="../lib/solvers/NonlinearSolveInterfaceModule/">NonlinearSolveInterfaceModule</a></li><li><a class="tocitem" href="../lib/solvers/IpoptSolverModule/">IpoptSolverModule</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-6-4" type="checkbox"/><label class="tocitem" for="menuitem-6-4"><span class="docs-label">I/O</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../lib/io/STANModule/">STANModule</a></li><li><a class="tocitem" href="../lib/io/SerializationModule/">SerializationModule</a></li><li><a class="tocitem" href="../lib/io/ExcelModule/">ExcelModule</a></li><li><a class="tocitem" href="../lib/io/HTTPServerModule/">HTTPServerModule</a></li></ul></li></ul></li><li><a class="tocitem" href="../contributing/">Contributing</a></li><li><a class="tocitem" href="../license/">License</a></li><li><a class="tocitem" href="../references/">References</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>HTTP API</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>HTTP API</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/MatplusGmbH/opensefa-reconciliation-solver" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/MatplusGmbH/opensefa-reconciliation-solver/blob/main/docs/src/http-api.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="http_api"><a class="docs-heading-anchor" href="#http_api">HTTP API</a><a id="http_api-1"></a><a class="docs-heading-anchor-permalink" href="#http_api" title="Permalink"></a></h1><p>OpenSEFA.jl provides a RESTful HTTP API for solving data reconciliation problems. This enables integration with web applications, remote clients, and other programming languages.</p><h2 id="Starting-the-Server"><a class="docs-heading-anchor" href="#Starting-the-Server">Starting the Server</a><a id="Starting-the-Server-1"></a><a class="docs-heading-anchor-permalink" href="#Starting-the-Server" title="Permalink"></a></h2><p>To start the HTTP server, run:</p><pre><code class="language-bash hljs">$ julia --project -e &quot;using OpenSEFA; start_server()&quot;</code></pre><p>If successful, you should see output similar to:</p><pre><code class="nohighlight hljs">   ____
+  / __ \_  ____  ______ ____  ____
+ / / / / |/_/ / / / __ `/ _ \/ __ \
+/ /_/ /&gt;  &lt;/ /_/ / /_/ /  __/ / / /
+\____/_/|_|\__, /\__, /\___/_/ /_/
+          /____//____/
+
+[ Info: 📦 Version 1.10.2 (2026-04-18)
+[ Info: ✅ Started server: http://0.0.0.0:8080
+[ Info: 📖 Documentation: http://0.0.0.0:8080/docs
+[ Info: 📊 Metrics: http://0.0.0.0:8080/docs/metrics
+[ Info: Listening on: 0.0.0.0:8080, thread id: 1</code></pre><div class="admonition is-info" id="Server-Configuration-44ba1972c1bfa12e"><header class="admonition-header">Server Configuration<a class="admonition-anchor" href="#Server-Configuration-44ba1972c1bfa12e" title="Permalink"></a></header><div class="admonition-body"><p>By default, the server listens on <code>0.0.0.0:8080</code>. You can customize the host and port in the server configuration.</p></div></div><h2 id="API-Endpoints"><a class="docs-heading-anchor" href="#API-Endpoints">API Endpoints</a><a id="API-Endpoints-1"></a><a class="docs-heading-anchor-permalink" href="#API-Endpoints" title="Permalink"></a></h2><h3 id="Health-Check"><a class="docs-heading-anchor" href="#Health-Check">Health Check</a><a id="Health-Check-1"></a><a class="docs-heading-anchor-permalink" href="#Health-Check" title="Permalink"></a></h3><p><strong>Endpoint:</strong> <code>GET /health</code></p><p>Check the server&#39;s operational status, including uptime and request statistics.</p><p><strong>Example Request:</strong></p><pre><code class="language-bash hljs">curl http://localhost:8080/health</code></pre><p><strong>Example Response:</strong></p><pre><code class="language-json hljs">{
+  &quot;requests&quot;: {
+    &quot;average time (sec)&quot;:0.87,
+    &quot;max time (sec)&quot;:2.34,
+    &quot;total&quot;: 12
+  },
+  &quot;uptime (sec)&quot;: 45.68
+}</code></pre><p><strong>Response Fields:</strong></p><ul><li><code>uptime (sec)</code>: Time since server started</li><li><code>requests.total</code>: Total number of requests processed</li><li><code>requests.max time (sec)</code>: Maximum request processing time</li><li><code>requests.average time (sec)</code>: Average request processing time</li></ul><h3 id="Solve-Problem"><a class="docs-heading-anchor" href="#Solve-Problem">Solve Problem</a><a id="Solve-Problem-1"></a><a class="docs-heading-anchor-permalink" href="#Solve-Problem" title="Permalink"></a></h3><p><strong>Endpoint:</strong> <code>POST /solve</code></p><p>Solve a data reconciliation problem specified by JSON content. Send the complete problem definition in the request body.</p><p><strong>Example Request:</strong></p><pre><code class="language-bash hljs">curl -X POST http://localhost:8080/solve \
+  -H &quot;Content-Type: application/json&quot; \
+  -d &#39;{
+    &quot;content&quot;: {
+      &quot;name&quot;: &quot;Simple Example&quot;,
+      &quot;variables&quot;: [
+        {
+          &quot;name&quot;: &quot;F1_mass_N1&quot;,
+          &quot;type&quot;: &quot;MeasuredVariable&quot;,
+          &quot;value&quot;: 1.0,
+          &quot;uncertainty&quot;: 0.1,
+          &quot;is_transfer_coefficient&quot;: false
+        },
+        {
+          &quot;name&quot;: &quot;F2_mass_N1&quot;,
+          &quot;type&quot;: &quot;UnmeasuredVariable&quot;,
+          &quot;is_transfer_coefficient&quot;: false
+        },
+        {
+          &quot;name&quot;: &quot;F3_mass_N1&quot;,
+          &quot;type&quot;: &quot;MeasuredVariable&quot;,
+          &quot;value&quot;: 2.0,
+          &quot;uncertainty&quot;: 0.3,
+          &quot;is_transfer_coefficient&quot;: false
+        }
+      ],
+      &quot;equations&quot;: [
+        {
+          &quot;constant_term&quot;: {&quot;value&quot;: 0},
+          &quot;linear_terms&quot;: [
+            {&quot;name&quot;: &quot;F1_mass_N1&quot;, &quot;factor&quot;: 1},
+            {&quot;name&quot;: &quot;F3_mass_N1&quot;, &quot;factor&quot;: 1},
+            {&quot;name&quot;: &quot;F2_mass_N1&quot;, &quot;factor&quot;: -1}
+          ],
+          &quot;bilinear_terms&quot;: []
+        }
+      ],
+      &quot;solver&quot;: &quot;JuMP&quot;
+    }
+  }&#39;</code></pre><p><strong>Response Format:</strong></p><p>Success response (HTTP 200):</p><pre><code class="language-json hljs">{
+  &quot;JuMP optimizer&quot;: &quot;IpoptMathOptInterfaceExt.Optimizer&quot;,
+  &quot;JuMP solve time (s)&quot;: 0.006921052932739258,
+  &quot;JuMP status&quot;: &quot;LOCALLY_SOLVED&quot;,
+  &quot;Solve time (s)&quot;: 0.008294383,
+  &quot;equations_value&quot;: {
+    &quot;1&quot;: -4.694022948115162e-13
+  },
+  &quot;globality_proven&quot;: true,
+  &quot;objective_value&quot;: 1.2297865261038426e-17,
+  &quot;residual_value&quot;: 4.694e-13,
+  &quot;status&quot;: &quot;FEASIBLE&quot;,
+  &quot;uncertainties&quot;: {
+    &quot;F1_mass_N1&quot;: 0.1,
+    &quot;F2_mass_N1&quot;: 0.31622776601683794,
+    &quot;F3_mass_N1&quot;: 0.3
+  },
+  &quot;unobservable unmeasured variables&quot;: [
+    &quot;0 unobservable unmeasured variables identified (not removed): &quot;,
+    []
+  ],
+  &quot;variables_value&quot;: {
+    &quot;F1_mass_N1&quot;: 1.000000000133192,
+    &quot;F2_mass_N1&quot;: 3.000000001106876,
+    &quot;F3_mass_N1&quot;: 2.000000000973215
+  },
+  &quot;version&quot;: &quot;0.18.0&quot;
+}</code></pre><p>Error response (HTTP 400/500):</p><pre><code class="language-json hljs">{
+  &quot;message&quot;: &quot;500: Internal Server Error&quot;
+}</code></pre><h2 id="JSON-Problem-Format"><a class="docs-heading-anchor" href="#JSON-Problem-Format">JSON Problem Format</a><a id="JSON-Problem-Format-1"></a><a class="docs-heading-anchor-permalink" href="#JSON-Problem-Format" title="Permalink"></a></h2><p>The JSON format for defining problems follows this schema:</p><pre><code class="language-json hljs">{
+  &quot;name&quot;: &quot;Problem Name&quot;,
+  &quot;variables&quot;: [
+    {
+      &quot;name&quot;: &quot;variable_name&quot;,
+      &quot;type&quot;: &quot;MeasuredVariable|UnmeasuredVariable|FixedVariable&quot;,
+      &quot;value&quot;: 1.0,                    // Required for Measured/Fixed
+      &quot;uncertainty&quot;: 0.1,               // Required for Measured
+      &quot;is_transfer_coefficient&quot;: false  // Optional, default: false
+    }
+  ],
+  &quot;equations&quot;: [
+    {
+      &quot;constant_term&quot;: {&quot;value&quot;: 0.0},
+      &quot;linear_terms&quot;: [
+        {&quot;name&quot;: &quot;variable_name&quot;, &quot;factor&quot;: 1.0}
+      ],
+      &quot;bilinear_terms&quot;: [               // Optional
+        {
+          &quot;name1&quot;: &quot;var1&quot;,
+          &quot;name2&quot;: &quot;var2&quot;,
+          &quot;factor&quot;: 0.5
+        }
+      ]
+    }
+  ],
+  &quot;solver&quot;: &quot;JuMP&quot;  // Alternative: &quot;Default&quot;
+}</code></pre><h3 id="Variable-Types"><a class="docs-heading-anchor" href="#Variable-Types">Variable Types</a><a id="Variable-Types-1"></a><a class="docs-heading-anchor-permalink" href="#Variable-Types" title="Permalink"></a></h3><ul><li><strong>MeasuredVariable</strong>: Known value with uncertainty (requires <code>value</code> and <code>uncertainty</code>)</li><li><strong>UnmeasuredVariable</strong>: Unknown value to be determined by optimization</li><li><strong>FixedVariable</strong>: Known value without uncertainty (requires <code>value</code>)</li></ul><h3 id="Equation-Structure"><a class="docs-heading-anchor" href="#Equation-Structure">Equation Structure</a><a id="Equation-Structure-1"></a><a class="docs-heading-anchor-permalink" href="#Equation-Structure" title="Permalink"></a></h3><p>Each equation represents a constraint of the form:</p><pre><code class="nohighlight hljs">constant_term + sum(linear_terms) + sum(bilinear_terms) = 0</code></pre><ul><li><strong>linear_terms</strong>: Terms of the form <code>factor * variable</code></li><li><strong>bilinear_terms</strong>: Terms of the form <code>factor * var1 * var2</code></li></ul><h2 id="Integration-with-OpenSEFA-editor"><a class="docs-heading-anchor" href="#Integration-with-OpenSEFA-editor">Integration with OpenSEFA editor</a><a id="Integration-with-OpenSEFA-editor-1"></a><a class="docs-heading-anchor-permalink" href="#Integration-with-OpenSEFA-editor" title="Permalink"></a></h2><p>OpenSEFA.jl can be integrated with the OpenSEFA editor. If you are interested in the editor source code, please <a href="mailto:contact@matplus.eu">contact</a> <a href="https://www.matplus.eu/">Matplus GmbH</a>. A valid JointJS+ license must be held.</p><h3 id="Setup"><a class="docs-heading-anchor" href="#Setup">Setup</a><a id="Setup-1"></a><a class="docs-heading-anchor-permalink" href="#Setup" title="Permalink"></a></h3><ol><li>Switch to the OpenSEFA editor project</li><li>Create a <code>config.js</code> file in the project root:</li></ol><pre><code class="language-javascript hljs">window.__ENV__ = {
+  EDA_HOST: &quot;http://0.0.0.0:8080&quot;,
+  SOLVER_TOKEN: &quot;&quot;
+};</code></pre><ol><li>Build the editor: <code>npm run build</code></li></ol><h3 id="Workflow"><a class="docs-heading-anchor" href="#Workflow">Workflow</a><a id="Workflow-1"></a><a class="docs-heading-anchor-permalink" href="#Workflow" title="Permalink"></a></h3><ol><li>Start the OpenSEFA.jl HTTP server</li><li>Launch the editor: <code>npm run dev</code></li><li>Create or load a model in the editor</li><li>Click the &quot;Solve&quot; button to send a request to the Julia backend</li><li>View results in the editor interface</li></ol><div class="admonition is-success" id="CORS-and-Security-44cac3a026378cf7"><header class="admonition-header">CORS and Security<a class="admonition-anchor" href="#CORS-and-Security-44cac3a026378cf7" title="Permalink"></a></header><div class="admonition-body"><p>When deploying in production, ensure proper CORS configuration and authentication tokens are set.</p></div></div><h2 id="Client-Examples"><a class="docs-heading-anchor" href="#Client-Examples">Client Examples</a><a id="Client-Examples-1"></a><a class="docs-heading-anchor-permalink" href="#Client-Examples" title="Permalink"></a></h2><h3 id="Python-Client"><a class="docs-heading-anchor" href="#Python-Client">Python Client</a><a id="Python-Client-1"></a><a class="docs-heading-anchor-permalink" href="#Python-Client" title="Permalink"></a></h3><pre><code class="language-python hljs">import requests
+import json
+
+# Define the problem
+problem = {
+    &quot;content&quot;: {
+        &quot;name&quot;: &quot;Python Example&quot;,
+        &quot;variables&quot;: [
+            {&quot;name&quot;: &quot;F1&quot;, &quot;type&quot;: &quot;MeasuredVariable&quot;, &quot;value&quot;: 1.0, &quot;uncertainty&quot;: 0.1},
+            {&quot;name&quot;: &quot;F2&quot;, &quot;type&quot;: &quot;UnmeasuredVariable&quot;},
+            {&quot;name&quot;: &quot;F3&quot;, &quot;type&quot;: &quot;MeasuredVariable&quot;, &quot;value&quot;: 2.0, &quot;uncertainty&quot;: 0.3}
+        ],
+        &quot;equations&quot;: [
+            {
+                &quot;constant_term&quot;: {&quot;value&quot;: 0},
+                &quot;linear_terms&quot;: [
+                    {&quot;name&quot;: &quot;F1&quot;, &quot;factor&quot;: 1},
+                    {&quot;name&quot;: &quot;F3&quot;, &quot;factor&quot;: 1},
+                    {&quot;name&quot;: &quot;F2&quot;, &quot;factor&quot;: -1}
+                ],
+                &quot;bilinear_terms&quot;: []
+            }
+        ],
+        &quot;solver&quot;: &quot;JuMP&quot;
+    }
+}
+
+# Send request
+response = requests.post(
+    &quot;http://localhost:8080/solve&quot;,
+    headers={&quot;Content-Type&quot;: &quot;application/json&quot;},
+    data=json.dumps(problem)
+)
+
+# Parse response
+if response.status_code == 200:
+    result = response.json()
+    print(json.dumps(result, indent=2))
+else:
+    print(f&quot;Error: {response.json()[&#39;message&#39;]}&quot;)</code></pre><h3 id="JavaScript-Client"><a class="docs-heading-anchor" href="#JavaScript-Client">JavaScript Client</a><a id="JavaScript-Client-1"></a><a class="docs-heading-anchor-permalink" href="#JavaScript-Client" title="Permalink"></a></h3><pre><code class="language-javascript hljs">async function solveProblem() {
+  const problem = {
+    content: {
+      name: &quot;JavaScript Example&quot;,
+      variables: [
+        { name: &quot;F1&quot;, type: &quot;MeasuredVariable&quot;, value: 1.0, uncertainty: 0.1 },
+        { name: &quot;F2&quot;, type: &quot;UnmeasuredVariable&quot; },
+        { name: &quot;F3&quot;, type: &quot;MeasuredVariable&quot;, value: 2.0, uncertainty: 0.3 }
+      ],
+      equations: [
+        {
+          constant_term: { value: 0 },
+          linear_terms: [
+            { name: &quot;F1&quot;, factor: 1 },
+            { name: &quot;F3&quot;, factor: 1 },
+            { name: &quot;F2&quot;, factor: -1 }
+          ],
+          bilinear_terms: []
+        }
+      ],
+      solver: &quot;JuMP&quot;
+    }
+  };
+
+  try {
+    const response = await fetch(&quot;http://localhost:8080/solve&quot;, {
+      method: &quot;POST&quot;,
+      headers: { &quot;Content-Type&quot;: &quot;application/json&quot; },
+      body: JSON.stringify(problem)
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      console.log(&quot;Objective:&quot;, result.objective_value);
+      console.log(&quot;Variables:&quot;, result.variables_value);
+    } else {
+      console.error(&quot;Error:&quot;, result.message);
+    }
+  } catch (error) {
+    console.error(&quot;Request failed:&quot;, error);
+  }
+}
+
+solveProblem();</code></pre><h2 id="Error-Handling"><a class="docs-heading-anchor" href="#Error-Handling">Error Handling</a><a id="Error-Handling-1"></a><a class="docs-heading-anchor-permalink" href="#Error-Handling" title="Permalink"></a></h2><p>The API returns appropriate HTTP status codes:</p><ul><li><strong>200 OK</strong>: Request successful, solution found</li><li><strong>500 Internal Server Error</strong>: Solver failed or internal error</li></ul><p>Error responses include a <code>message</code> field with details:</p><pre><code class="language-json hljs">{
+  &quot;message&quot;: &quot;500: Internal Server Error&quot;
+}</code></pre><h2 id="Performance-Considerations"><a class="docs-heading-anchor" href="#Performance-Considerations">Performance Considerations</a><a id="Performance-Considerations-1"></a><a class="docs-heading-anchor-permalink" href="#Performance-Considerations" title="Permalink"></a></h2><ul><li>The server processes requests synchronously</li><li>For large models, requests may take several seconds to minutes</li><li>Consider implementing client-side timeouts (recommended: 60-300 seconds)</li><li>Monitor the <code>/health</code> endpoint for server performance metrics</li></ul><h2 id="Next-Steps"><a class="docs-heading-anchor" href="#Next-Steps">Next Steps</a><a id="Next-Steps-1"></a><a class="docs-heading-anchor-permalink" href="#Next-Steps" title="Permalink"></a></h2><ul><li>Review <a href="../examples/#examples_page">Examples</a> for problem formulations</li><li>Check the API Reference for programmatic Julia usage</li><li>See <a href="../getting-started/#getting_started">Getting Started</a> for installation details</li></ul></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../examples/">« Examples</a><a class="docs-footer-nextpage" href="../lib/model/ConstraintsModule/">ConstraintsModule »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Wednesday 9 September 2026 13:15">Wednesday 9 September 2026</span>. Using Julia version 1.12.7.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Examples · OpenSEFA.jl</title><meta name="title" content="Examples · OpenSEFA.jl"/><meta property="og:title" content="Examples · OpenSEFA.jl"/><meta property="twitter:title" content="Examples · OpenSEFA.jl"/><meta name="description" content="Documentation for OpenSEFA.jl."/><meta property="og:description" content="Documentation for OpenSEFA.jl."/><meta property="twitter:description" content="Documentation for OpenSEFA.jl."/><meta property="og:url" content="https://matplusgmbh.github.io/opensefa-reconciliation-solver/stable/examples/"/><meta property="twitter:url" content="https://matplusgmbh.github.io/opensefa-reconciliation-solver/stable/examples/"/><link rel="canonical" href="https://matplusgmbh.github.io/opensefa-reconciliation-solver/stable/examples/"/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">OpenSEFA.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li><a class="tocitem" href="../getting-started/">Getting Started</a></li><li><a class="tocitem" href="../solving_strategies/">Solving Strategies</a></li><li class="is-active"><a class="tocitem" href>Examples</a><ul class="internal"><li><a class="tocitem" href="#Basic-Example:-Seven-Flows-Problem"><span>Basic Example: Seven Flows Problem</span></a></li><li><a class="tocitem" href="#Using-Presolve"><span>Using Presolve</span></a></li><li><a class="tocitem" href="#Custom-Solver-Backends"><span>Custom Solver Backends</span></a></li><li><a class="tocitem" href="#Loading-from-STAN-Software"><span>Loading from STAN Software</span></a></li><li><a class="tocitem" href="#Working-with-JSON-Models"><span>Working with JSON Models</span></a></li><li><a class="tocitem" href="#Programmatic-Problem-Construction"><span>Programmatic Problem Construction</span></a></li><li><a class="tocitem" href="#Inspecting-Solutions"><span>Inspecting Solutions</span></a></li><li><a class="tocitem" href="#Error-Handling-and-Validation"><span>Error Handling and Validation</span></a></li><li><a class="tocitem" href="#Performance-Tips"><span>Performance Tips</span></a></li><li><a class="tocitem" href="#Next-Steps"><span>Next Steps</span></a></li></ul></li><li><a class="tocitem" href="../http-api/">HTTP API</a></li><li><span class="tocitem">API Reference</span><ul><li><input class="collapse-toggle" id="menuitem-6-1" type="checkbox"/><label class="tocitem" for="menuitem-6-1"><span class="docs-label">Model</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../lib/model/ConstraintsModule/">ConstraintsModule</a></li><li><a class="tocitem" href="../lib/model/ConstraintParserModule/">ConstraintParserModule</a></li><li><a class="tocitem" href="../lib/model/ComparisonModule/">ComparisonModule</a></li><li><a class="tocitem" href="../lib/model/ErrorModule/">ErrorModule</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-6-2" type="checkbox"/><label class="tocitem" for="menuitem-6-2"><span class="docs-label">Algorithms</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../lib/algorithms/ReconciliationModule/">ReconciliationModule</a></li><li><a class="tocitem" href="../lib/algorithms/PresolveModule/">PresolveModule</a></li><li><a class="tocitem" href="../lib/algorithms/QCQPModule/">QCQPModule</a></li><li><a class="tocitem" href="../lib/algorithms/RowEchelonModule/">RowEchelonModule</a></li><li><a class="tocitem" href="../lib/algorithms/SparseRowEchelonModule/">SparseRowEchelonModule</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-6-3" type="checkbox"/><label class="tocitem" for="menuitem-6-3"><span class="docs-label">Solvers</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../lib/solvers/DefaultSolverModule/">DefaultSolverModule</a></li><li><a class="tocitem" href="../lib/solvers/JuMPInterfaceModule/">JuMPInterfaceModule</a></li><li><a class="tocitem" href="../lib/solvers/NonlinearSolveInterfaceModule/">NonlinearSolveInterfaceModule</a></li><li><a class="tocitem" href="../lib/solvers/IpoptSolverModule/">IpoptSolverModule</a></li></ul></li><li><input class="collapse-toggle" id="menuitem-6-4" type="checkbox"/><label class="tocitem" for="menuitem-6-4"><span class="docs-label">I/O</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../lib/io/STANModule/">STANModule</a></li><li><a class="tocitem" href="../lib/io/SerializationModule/">SerializationModule</a></li><li><a class="tocitem" href="../lib/io/ExcelModule/">ExcelModule</a></li><li><a class="tocitem" href="../lib/io/HTTPServerModule/">HTTPServerModule</a></li></ul></li></ul></li><li><a class="tocitem" href="../contributing/">Contributing</a></li><li><a class="tocitem" href="../license/">License</a></li><li><a class="tocitem" href="../references/">References</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Examples</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Examples</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/MatplusGmbH/opensefa-reconciliation-solver" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/MatplusGmbH/opensefa-reconciliation-solver/blob/main/docs/src/examples.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="examples_page"><a class="docs-heading-anchor" href="#examples_page">Examples</a><a id="examples_page-1"></a><a class="docs-heading-anchor-permalink" href="#examples_page" title="Permalink"></a></h1><p>This page provides practical examples demonstrating the various capabilities of OpenSEFA.jl.</p><h2 id="Basic-Example:-Seven-Flows-Problem"><a class="docs-heading-anchor" href="#Basic-Example:-Seven-Flows-Problem">Basic Example: Seven Flows Problem</a><a id="Basic-Example:-Seven-Flows-Problem-1"></a><a class="docs-heading-anchor-permalink" href="#Basic-Example:-Seven-Flows-Problem" title="Permalink"></a></h2><p>The seven flows problem from <a href="../references/#[C16]">[C16]</a> is a canonical example in data reconciliation for material flow analysis.</p><pre><code class="language-julia hljs">using OpenSEFA
+
+# Load the problem definition
+include(joinpath(MODELS_PATH, &quot;seven_flows.jl&quot;))
+rec = seven_flows_cencic_2012()
+
+# Solve with default settings
+sol = solve(rec)
+
+# Inspect the solution
+println(&quot;Objective value: &quot;, sol.objective_value)
+println(&quot;Max constraint violation: &quot;, sol.score.residual)</code></pre><h2 id="Using-Presolve"><a class="docs-heading-anchor" href="#Using-Presolve">Using Presolve</a><a id="Using-Presolve-1"></a><a class="docs-heading-anchor-permalink" href="#Using-Presolve" title="Permalink"></a></h2><p>The presolve functionality applies symbolic and numeric simplifications to reduce problem size:</p><pre><code class="language-julia hljs">using OpenSEFA
+
+include(joinpath(MODELS_PATH, &quot;seven_flows.jl&quot;))
+rec = seven_flows_cencic_2012()
+
+# Apply presolve to simplify the problem
+pre = unwrap(presolve(rec))
+
+# The presolved problem may have fewer variables/equations
+println(&quot;Original problem: &quot;, rec)
+println(&quot;Presolved problem: &quot;, pre.pre)
+
+# Solve the presolved problem
+sol = solve(pre.pre)</code></pre><div class="admonition is-success" id="Tip-d99f9e7d49753c3d"><header class="admonition-header">Tip<a class="admonition-anchor" href="#Tip-d99f9e7d49753c3d" title="Permalink"></a></header><div class="admonition-body"><p>The default solver (<code>DefaultSolver</code>) automatically applies presolve internally. Use explicit presolve when you want to inspect the simplified problem structure.</p></div></div><h2 id="Custom-Solver-Backends"><a class="docs-heading-anchor" href="#Custom-Solver-Backends">Custom Solver Backends</a><a id="Custom-Solver-Backends-1"></a><a class="docs-heading-anchor-permalink" href="#Custom-Solver-Backends" title="Permalink"></a></h2><p>OpenSEFA.jl supports multiple solver backends through the JuMP interface.</p><h3 id="Using-the-Default-Solver"><a class="docs-heading-anchor" href="#Using-the-Default-Solver">Using the Default Solver</a><a id="Using-the-Default-Solver-1"></a><a class="docs-heading-anchor-permalink" href="#Using-the-Default-Solver" title="Permalink"></a></h3><p>The default solver applies three steps:</p><ol><li><strong>Presolve</strong>: Simplify the problem through structural reductions. If fully solved, return immediately.</li><li><strong>Starting values</strong>: Compute initial values for unmeasured variables using <code>NonlinearSolve</code>. If the problem is fully determined, use these as the final solution.</li><li><strong>Optimize</strong>: Solve the full weighted least-squares problem using the JuMP framework (with <code>Ipopt</code> as default solver). Starting values from step 2 are used as a warm start when available.</li></ol><pre><code class="language-julia hljs">using OpenSEFA
+
+include(joinpath(MODELS_PATH, &quot;seven_flows.jl&quot;))
+rec = seven_flows_cencic_2012()
+
+# Explicit use of DefaultSolver (equivalent to solve(rec))
+sol = solve(rec, DefaultSolver())</code></pre><h3 id="Using-Alternative-NLP-Solvers"><a class="docs-heading-anchor" href="#Using-Alternative-NLP-Solvers">Using Alternative NLP Solvers</a><a id="Using-Alternative-NLP-Solvers-1"></a><a class="docs-heading-anchor-permalink" href="#Using-Alternative-NLP-Solvers" title="Permalink"></a></h3><p>You can use any JuMP-compatible solver:</p><pre><code class="language-julia hljs">using OpenSEFA
+using MadNLP
+
+include(joinpath(MODELS_PATH, &quot;seven_flows.jl&quot;))
+rec = seven_flows_cencic_2012()
+
+# Solve using MadNLP instead of Ipopt
+sol = solve(rec, JuMPSolver(optimizer=MadNLP.Optimizer))</code></pre><p>Other compatible solvers include:</p><ul><li><code>Ipopt.Optimizer</code> (default)</li><li><code>MadNLP.Optimizer</code></li><li>Any other JuMP-compatible NLP solver</li></ul><h2 id="Loading-from-STAN-Software"><a class="docs-heading-anchor" href="#Loading-from-STAN-Software">Loading from STAN Software</a><a id="Loading-from-STAN-Software-1"></a><a class="docs-heading-anchor-permalink" href="#Loading-from-STAN-Software" title="Permalink"></a></h2><p>OpenSEFA.jl can import models created in STAN software.</p><h3 id="Example:-Loading-STAN-Trace-File"><a class="docs-heading-anchor" href="#Example:-Loading-STAN-Trace-File">Example: Loading STAN Trace File</a><a id="Example:-Loading-STAN-Trace-File-1"></a><a class="docs-heading-anchor-permalink" href="#Example:-Loading-STAN-Trace-File" title="Permalink"></a></h3><pre><code class="language-julia hljs">using OpenSEFA
+
+# Path to model directory containing trace.txt
+path = joinpath(MODELS_PATH, &quot;Cencic_2016_STAN&quot;)
+
+# Parse the STAN trace file
+strace = parse(STANTrace, path)
+
+# Convert to ReconciliationProblem
+rec = convert(ReconciliationProblem, strace)
+
+# Solve the problem
+sol = solve(rec)
+
+println(&quot;Solution for Seven Flows model:&quot;)
+println(&quot;  Objective value: &quot;, sol.objective_value)
+println(&quot;  Variables: &quot;, length(sol.variables_value))</code></pre><div class="admonition is-info" id="Note-d03253ee9671e6e4"><header class="admonition-header">Note<a class="admonition-anchor" href="#Note-d03253ee9671e6e4" title="Permalink"></a></header><div class="admonition-body"><p>To generate a <code>trace.txt</code> file from STAN:</p><ol><li>Open your model in STAN</li><li>Run the solver with &quot;verbose equations output&quot; enabled</li><li>Save the entire trace console output to <code>trace.txt</code> in your model directory</li></ol></div></div><h3 id="Example:-Loading-STAN-Data-(CSV)"><a class="docs-heading-anchor" href="#Example:-Loading-STAN-Data-(CSV)">Example: Loading STAN Data (CSV)</a><a id="Example:-Loading-STAN-Data-(CSV)-1"></a><a class="docs-heading-anchor-permalink" href="#Example:-Loading-STAN-Data-(CSV)" title="Permalink"></a></h3><pre><code class="language-julia hljs">using OpenSEFA
+
+# Path to model directory containing CSV data files
+path = joinpath(MODELS_PATH, &quot;Cencic_2016_STAN&quot;)
+
+# Load data from STAN CSV exports
+sdata = load_stan_data(path)
+
+# Inspect the loaded data
+println(&quot;Flows data: &quot;, sdata.flows)
+println(&quot;Variables data: &quot;, sdata.flowvalues)</code></pre><h2 id="Working-with-JSON-Models"><a class="docs-heading-anchor" href="#Working-with-JSON-Models">Working with JSON Models</a><a id="Working-with-JSON-Models-1"></a><a class="docs-heading-anchor-permalink" href="#Working-with-JSON-Models" title="Permalink"></a></h2><p>Models can be defined in JSON format for easy integration with web applications:</p><pre><code class="language-julia hljs">using OpenSEFA
+
+# Load a JSON model
+json_path = joinpath(MODELS_PATH, &quot;seven_flows.json&quot;)
+model = load_model(json_path)</code></pre><h2 id="Programmatic-Problem-Construction"><a class="docs-heading-anchor" href="#Programmatic-Problem-Construction">Programmatic Problem Construction</a><a id="Programmatic-Problem-Construction-1"></a><a class="docs-heading-anchor-permalink" href="#Programmatic-Problem-Construction" title="Permalink"></a></h2><p>You can build problems programmatically using Julia data structures:</p><pre><code class="language-julia hljs">using OpenSEFA
+
+# Define variables
+variables = [
+    MeasuredVariable(name = &quot;F1&quot;, value = 1.0, uncertainty = 0.1),
+    UnmeasuredVariable(name = &quot;F2&quot;),
+    MeasuredVariable(name = &quot;F3&quot;, value = 2.0, uncertainty = 0.3)
+]
+
+# Define equations (mass balance: F1 + F3 - F2 = 0)
+equations = [
+    Equation(
+        ConstantTerm(0.0),
+        [LinearTerm(&quot;F1&quot;, 1.0), LinearTerm(&quot;F3&quot;, 1.0), LinearTerm(&quot;F2&quot;, -1.0)],
+        BilinearTerm[]
+    )
+]
+
+# Create the problem and add variables/equations
+rec = ReconciliationProblem(name = &quot;Simple Example&quot;)
+add_variable!(rec, variables)
+add_equation!(rec, equations)
+
+# Solve
+sol = solve(rec)</code></pre><p>Equations can alternatively be parsed from a string:</p><pre><code class="language-julia hljs">using OpenSEFA
+
+# Define equation F1 + F3 - F2 = 0
+eq = parse_equation(&quot;F1 + F3 - F2 = 0&quot;)</code></pre><h2 id="Inspecting-Solutions"><a class="docs-heading-anchor" href="#Inspecting-Solutions">Inspecting Solutions</a><a id="Inspecting-Solutions-1"></a><a class="docs-heading-anchor-permalink" href="#Inspecting-Solutions" title="Permalink"></a></h2><p>The solution object provides various methods to inspect results:</p><pre><code class="language-julia hljs">using OpenSEFA
+
+include(joinpath(MODELS_PATH, &quot;seven_flows.jl&quot;))
+rec = seven_flows_cencic_2012()
+sol = solve(rec)
+
+# Access solution values
+println(&quot;Reconciled variable values:&quot;)
+display(sol.variables_value)
+
+# Check solution quality
+println(&quot;\nSolution quality:&quot;)
+println(&quot;  Objective: &quot;, sol.objective_value)
+display(sol.score)
+
+# Check if solution is acceptable
+if sol.score.residual &lt; 1e-6
+    println(&quot;  ✓ Solution satisfies constraints&quot;)
+else
+    println(&quot;  ✗ Warning: Large constraint violations&quot;)
+end</code></pre><h2 id="Error-Handling-and-Validation"><a class="docs-heading-anchor" href="#Error-Handling-and-Validation">Error Handling and Validation</a><a id="Error-Handling-and-Validation-1"></a><a class="docs-heading-anchor-permalink" href="#Error-Handling-and-Validation" title="Permalink"></a></h2><p>Handle solver failures gracefully:</p><pre><code class="language-julia hljs">using OpenSEFA
+
+rec = # ... your problem definition ...
+
+try
+    sol = solve(rec)
+
+    # Validate solution
+    if sol.objective_value &gt; 1000.0
+        @warn &quot;Large objective value, solution may be poor&quot;
+    end
+
+    if sol.score.residual &gt; 1e-4
+        @warn &quot;Constraint violations detected&quot;
+    end
+
+catch e
+    @error &quot;Solver failed&quot; exception=e
+    # Fall back to alternative solver or settings
+    sol = solve(rec, JuMPSolver(optimizer=AlternativeSolver.Optimizer))
+end</code></pre><h2 id="Performance-Tips"><a class="docs-heading-anchor" href="#Performance-Tips">Performance Tips</a><a id="Performance-Tips-1"></a><a class="docs-heading-anchor-permalink" href="#Performance-Tips" title="Permalink"></a></h2><p>For large-scale problems:</p><ol><li><strong>Use presolve</strong> to reduce problem size</li><li><strong>Choose appropriate solvers</strong> - Ipopt is generally robust, MadNLP may be faster for some problems</li><li><strong>Provide good initial guesses</strong> when constructing variables</li><li><strong>Monitor solver output</strong> to diagnose convergence issues</li></ol><pre><code class="language-julia hljs">using OpenSEFA
+using Ipopt
+
+# For large problems, explicit presolve can help
+rec = # ... large problem ...
+presolve_result = presolve(rec)
+pre = unwrap(presolve_result).pre
+
+# Solve with custom tolerances (if using JuMP interface)
+sol = solve(pre, JuMPSolver(
+    optimizer = Ipopt.Optimizer,
+    tol = 1e-6,
+    max_iter = 1000
+))</code></pre><h2 id="Next-Steps"><a class="docs-heading-anchor" href="#Next-Steps">Next Steps</a><a id="Next-Steps-1"></a><a class="docs-heading-anchor-permalink" href="#Next-Steps" title="Permalink"></a></h2><ul><li>Explore the <a href="../http-api/#http_api">HTTP API</a> for web-based integration</li><li>Check the API Reference for detailed function documentation</li><li>Review the <a href="../references/#refs_page">References</a> for theoretical background</li></ul></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../solving_strategies/">« Solving Strategies</a><a class="docs-footer-nextpage" href="../http-api/">HTTP API »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Wednesday 9 September 2026 13:15">Wednesday 9 September 2026</span>. Using Julia version 1.12.7.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
